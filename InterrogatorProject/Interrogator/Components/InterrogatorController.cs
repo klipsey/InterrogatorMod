@@ -40,11 +40,7 @@ namespace InterrogatorMod.Interrogator.Components
 
         private uint playID1;
 
-        private ParticleSystem handElectricityEffect;
-        private ParticleSystem chainStabCombo;
-        private ParticleSystem chainStabComboHand;
-        private GameObject spinInstance;
-        private GameObject muzzleTrail;
+        private ParticleSystem swordEffect;
 
         public Action onConvictChange;
 
@@ -57,14 +53,53 @@ namespace InterrogatorMod.Interrogator.Components
             this.characterModel = modelLocator.modelBaseTransform.GetComponentInChildren<CharacterModel>();
             this.skillLocator = this.GetComponent<SkillLocator>();
             this.skinController = modelLocator.modelTransform.gameObject.GetComponent<ModelSkinController>();
-        }
 
+            Hook();
+
+            this.Invoke("ApplySkin", 0.3f);
+        }
         private void Start()
         {
         }
-        private void Update()
-        {
 
+        private void Hook()
+        {
+            On.RoR2.FriendlyFireManager.ShouldSplashHitProceed += FriendlyFireManager_ShouldSplashHitProceed;
+            On.RoR2.FriendlyFireManager.ShouldDirectHitProceed += FriendlyFireManager_ShouldDirectHitProceed;
+            On.RoR2.FriendlyFireManager.ShouldSeekingProceed += FriendlyFireManager_ShouldSeekingProceed;
+        }
+        public void ApplySkin()
+        {
+            if (this.skinController)
+            {
+                this.swordEffect = this.childLocator.FindChild("SpecialEffectHand").gameObject.GetComponent<ParticleSystem>();
+            }
+        }
+        private bool FriendlyFireManager_ShouldSeekingProceed(On.RoR2.FriendlyFireManager.orig_ShouldSeekingProceed orig, HealthComponent victim, TeamIndex attackerTeamIndex)
+        {
+            if (victim.body.baseNameToken == "KENKO_INTERROGATOR_NAME" && attackerTeamIndex == victim.body.teamComponent.teamIndex)
+            {
+                return true;
+            }
+            else return orig.Invoke(victim, attackerTeamIndex);
+        }
+
+        private bool FriendlyFireManager_ShouldDirectHitProceed(On.RoR2.FriendlyFireManager.orig_ShouldDirectHitProceed orig, HealthComponent victim, TeamIndex attackerTeamIndex)
+        {
+            if (victim.body.baseNameToken == "KENKO_INTERROGATOR_NAME" && attackerTeamIndex == victim.body.teamComponent.teamIndex)
+            {
+                return true;
+            }
+            else return orig.Invoke(victim, attackerTeamIndex);
+        }
+
+        private bool FriendlyFireManager_ShouldSplashHitProceed(On.RoR2.FriendlyFireManager.orig_ShouldSplashHitProceed orig, HealthComponent victim, TeamIndex attackerTeamIndex)
+        {
+            if (victim.body.baseNameToken == "KENKO_INTERROGATOR_NAME" && attackerTeamIndex == victim.body.teamComponent.teamIndex)
+            {
+                return true;
+            }
+            else return orig.Invoke(victim, attackerTeamIndex);
         }
         private void FixedUpdate()
         {
@@ -74,29 +109,6 @@ namespace InterrogatorMod.Interrogator.Components
                 onConvictChange.Invoke();
             }
         }
-        public void ActivateCritLightning()
-        {
-            if (this.handElectricityEffect)
-            {
-                if (!this.handElectricityEffect.isPlaying) this.handElectricityEffect.Play();
-                if (!hasPlayed)
-                {
-                    this.playID1 = Util.PlaySound("sfx_scout_atomic_duration", this.gameObject);
-                    hasPlayed = true;
-                }
-            }
-        }
-        
-        public void DeactivateCritLightning(bool willReturn = false)
-        {
-            if(this.handElectricityEffect)
-            {
-                if (willReturn) hasPlayed = false;
-                if (this.handElectricityEffect.isPlaying) this.handElectricityEffect.Stop();
-                AkSoundEngine.StopPlayingID(this.playID1);
-            }
-        }
-
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
         {
             if (itemIndex == DLC1Content.Items.EquipmentMagazineVoid.itemIndex)
@@ -105,6 +117,10 @@ namespace InterrogatorMod.Interrogator.Components
             }
         }
 
+        public void EnableSword()
+        {
+            if (!this.swordEffect.isPlaying) swordEffect.Play();
+        }
         private void OnDestroy()
         {
             AkSoundEngine.StopPlayingID(this.playID1);
@@ -113,6 +129,10 @@ namespace InterrogatorMod.Interrogator.Components
             {
                 this.characterBody.master.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
             }
+
+            On.RoR2.FriendlyFireManager.ShouldSplashHitProceed -= FriendlyFireManager_ShouldSplashHitProceed;
+            On.RoR2.FriendlyFireManager.ShouldDirectHitProceed -= FriendlyFireManager_ShouldDirectHitProceed;
+            On.RoR2.FriendlyFireManager.ShouldSeekingProceed -= FriendlyFireManager_ShouldSeekingProceed;
         }
     }
 }

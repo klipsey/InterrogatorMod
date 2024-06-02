@@ -224,7 +224,7 @@ namespace InterrogatorMod.Interrogator
         {
             SteppedSkillDef batSkillDef = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
                 (
-                    "Psychotic Swing",
+                    "Brutal Bash",
                     INTERROGATOR_PREFIX + "PRIMARY_SWING_NAME",
                     INTERROGATOR_PREFIX + "PRIMARY_SWING_DESCRIPTION",
                     assetBundle.LoadAsset<Sprite>("texSwingIcon"),
@@ -277,13 +277,13 @@ namespace InterrogatorMod.Interrogator
         {
             SkillDef dash = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "Sap",
-                skillNameToken = INTERROGATOR_PREFIX + "UTILITY_FLIP_NAME",
-                skillDescriptionToken = INTERROGATOR_PREFIX + "UTILITY_FLIP_DESCRIPTION",
+                skillName = "Falsify",
+                skillNameToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_NAME",
+                skillDescriptionToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_DESCRIPTION",
                 keywordTokens = new string[] { },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpyFlip"),
 
-                activationState = new SerializableEntityStateType(typeof()),
+                activationState = new SerializableEntityStateType(typeof(Falsify)),
                 activationStateMachineName = "Weapon2",
                 interruptPriority = InterruptPriority.Skill,
 
@@ -494,15 +494,17 @@ namespace InterrogatorMod.Interrogator
             On.RoR2.HealthComponent.TakeDamage += new On.RoR2.HealthComponent.hook_TakeDamage(HealthComponent_TakeDamage);
             RoR2.GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+
             if(InterrogatorPlugin.emotesInstalled) Emotes();
         }
+
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         private static void Emotes()
         {
             On.RoR2.SurvivorCatalog.Init += (orig) =>
             {
                 orig();
-                var skele = InterrogatorAssets.mainAssetBundle.LoadAsset<GameObject>("spy_emoteskeleton");
+                var skele = InterrogatorAssets.mainAssetBundle.LoadAsset<GameObject>("interrogator_emoteskeleton");
                 CustomEmotesAPI.ImportArmature(InterrogatorSurvivor.characterPrefab, skele);
             };
         }

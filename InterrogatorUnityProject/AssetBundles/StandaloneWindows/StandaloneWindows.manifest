@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2929365755
+CRC: 1011061419
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: spy
+      Name: interrogator
       Dependencies: {}

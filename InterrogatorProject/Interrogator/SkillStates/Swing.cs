@@ -38,16 +38,11 @@ namespace InterrogatorMod.Interrogator.SkillStates
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingMuzzle1" : "SwingMuzzle2";
             playbackRateParam = "Swing.playbackRate";
-            swingEffectPrefab = this.isAtomic ? ScoutAssets.atomicSwingEffect : ScoutAssets.batSwingEffect;
-            if (this.isAtomic)
-            {
-                moddedDamageTypeHolder.Add(this.scoutController.ModdedDamageType);
-                damageType |= DamageType.WeakOnHit;
-            }
-            moddedDamageTypeHolder.Add(DamageTypes.FillAtomic);
-            hitEffectPrefab = ScoutAssets.batHitEffect;
+            swingEffectPrefab = InterrogatorAssets.batSwingEffect;
+            moddedDamageTypeHolder.Add(DamageTypes.InterrogatorGuilty);
+            hitEffectPrefab = InterrogatorAssets.batHitEffect;
 
-            impactSound = ScoutAssets.batImpactSoundDef.index;
+            impactSound = InterrogatorAssets.batImpactSoundEvent.index;
 
             base.OnEnter();
         }
