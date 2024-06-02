@@ -36,13 +36,13 @@ namespace InterrogatorMod.Interrogator.Components
         private float gracePeriod = 0f;
         public float convictTimer = 0f;
 
-        private int chainStabComboCounter = 0;
+        private int guiltyUnitCounter = 0;
 
         private uint playID1;
 
         private ParticleSystem swordEffect;
 
-        public Action onConvictChange;
+        public Action onConvictDurationChange;
 
         private void Awake()
         {
@@ -61,7 +61,7 @@ namespace InterrogatorMod.Interrogator.Components
         private void Start()
         {
         }
-
+        #region tooMuchCrap
         private void Hook()
         {
             On.RoR2.FriendlyFireManager.ShouldSplashHitProceed += FriendlyFireManager_ShouldSplashHitProceed;
@@ -101,14 +101,6 @@ namespace InterrogatorMod.Interrogator.Components
             }
             else return orig.Invoke(victim, attackerTeamIndex);
         }
-        private void FixedUpdate()
-        {
-            if(convictTimer > 0f)
-            {
-                convictTimer -= Time.fixedDeltaTime;
-                onConvictChange.Invoke();
-            }
-        }
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
         {
             if (itemIndex == DLC1Content.Items.EquipmentMagazineVoid.itemIndex)
@@ -117,6 +109,36 @@ namespace InterrogatorMod.Interrogator.Components
             }
         }
 
+        #endregion
+        private void FixedUpdate()
+        {
+            if(convictTimer > 0f)
+            {
+                convictTimer -= Time.fixedDeltaTime;
+                onConvictDurationChange.Invoke();
+            }
+        }
+        public void ChangeCounter(int i)
+        {
+            guiltyUnitCounter += i;
+        }
+
+        public void StinkyLoserHasAlived()
+        {
+            NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncCounter(identity.netId, this.gameObject, true).Send(NetworkDestination.Clients);
+        }
+
+        public void StinkyLoserHasDied()
+        {
+            if(NetworkServer.active) this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+            NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncCounter(identity.netId, this.gameObject, false).Send(NetworkDestination.Clients);
+        }
         public void EnableSword()
         {
             if (!this.swordEffect.isPlaying) swordEffect.Play();

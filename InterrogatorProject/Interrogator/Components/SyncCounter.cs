@@ -6,25 +6,28 @@ using RoR2;
 
 namespace InterrogatorMod.Interrogator.Components
 {
-    public class SyncStabExplosion : INetMessage
+    public class SyncCounter : INetMessage
     {
         private NetworkInstanceId netId;
         private GameObject target;
+        private bool increase;
 
-        public SyncStabExplosion()
+        public SyncCounter()
         {
         }
 
-        public SyncStabExplosion(NetworkInstanceId netId, GameObject target)
+        public SyncCounter(NetworkInstanceId netId, GameObject target, bool increase)
         {
             this.netId = netId;
             this.target = target;
+            this.increase = increase;
         }
 
         public void Deserialize(NetworkReader reader)
         {
             this.netId = reader.ReadNetworkId();
             this.target = reader.ReadGameObject();
+            this.increase = reader.ReadBoolean();
         }
 
         public void OnReceived()
@@ -32,13 +35,19 @@ namespace InterrogatorMod.Interrogator.Components
             GameObject bodyObject = Util.FindNetworkObject(this.netId);
             if (!bodyObject) return;
 
-            bodyObject.AddComponent<BloodExplosion>();
+            InterrogatorController iController = bodyObject.GetComponent<InterrogatorController>();
+            int i = increase ? 1 : -1;
+            if(iController)
+            {
+                iController.ChangeCounter(i);
+            }
         }
 
         public void Serialize(NetworkWriter writer)
         {
             writer.Write(this.netId);
             writer.Write(this.target);
+            writer.Write(this.increase);
         }
     }
 }
