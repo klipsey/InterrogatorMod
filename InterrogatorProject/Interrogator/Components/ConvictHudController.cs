@@ -20,7 +20,7 @@ namespace InterrogatorMod.Interrogator.Components
         private void Start()
         {
             this.interrogatorController = this.targetHUD?.targetBodyObject?.GetComponent<InterrogatorController>();
-            this.interrogatorController.onConvictChange += SetDisplay;
+            this.interrogatorController.onConvictDurationChange += SetDisplay;
 
             this.durationDisplay.SetActive(false);
             SetDisplay();
@@ -28,7 +28,7 @@ namespace InterrogatorMod.Interrogator.Components
 
         private void OnDestroy()
         {
-            if (this.interrogatorController) this.interrogatorController.onConvictChange -= SetDisplay;
+            if (this.interrogatorController) this.interrogatorController.onConvictDurationChange -= SetDisplay;
 
             this.targetText.token = string.Empty;
             this.durationDisplay.SetActive(false);

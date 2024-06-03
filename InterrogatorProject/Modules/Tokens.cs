@@ -6,23 +6,13 @@ namespace InterrogatorMod.Modules
     {
         public const string agilePrefix = "<style=cIsUtility>Agile</style>";
 
-        public const string spyCritPrefix = "<color=#62746f>Espionage</color>";
-
-        public const string spyBigEarnerPrefix = "<color=#62746f>Opportunist</color>";
-
-        public const string spyBackstabPrefix = "<style=cIsHealth>Backstab</style>";
+        public const string interrogatorPressuredPrefix = "Pressured";
 
         public static string agileKeyword = KeywordText("Agile", "The skill can be used while sprinting.");
 
-        public static string spyCritKeyword = KeywordText("Espionage", $"Your next shot has <style=cIsDamage>100% Crit Chance</style>. " +
-            $"Rolling a <style=cIsDamage>Critical Strike</style> with <color=#62746f>Espionage</color> stacks increases <style=cIsDamage>damage by 2x</style> instead. " +
-            $"<style=cIsHealth>Backstabs</style> will always grant <color=#62746f>Espionage</color> stacks on champion enemies.");
-       
-        public static string spyBigEarnerKeyword = KeywordText("Opportunist", $"Your <style=cIsHealth>HP</style> and <style=cIsHealing>health regneration</style> are <style=cDeath>permanently reduced by {InterrogatorConfig.bigEarnerHealthPunishment.Value * 100f}%</style>. " +
-            "<style=cIsHealth>Backstabs</style> that don't kill champion enemies grant <style=cIsUtility>movement speed</style> and <style=cIsHealing>barrier</style>. ");
-        
-        public static string spyBackstabKeyword = KeywordText("Backstab", $"Deals <style=cIsDamage>2x damage</style> against champion enemies and <style=cIsHealth>30% HP</style> or more to elites.");
+        public static string interrogatorPressuredKeyword = KeywordText("Pressured", "Boost attackspeed and movespeed but lowers armor and damage (decreased ally negative stats).");
 
+        public static string interrogatorGuiltyKeyword = KeywordText("Ally Damage", "Allies take and deal less damage each other and Guilty expires from them after 10 seconds.");
         public static string DamageText(string text)
         {
             return $"<style=cIsDamage>{text}</style>";

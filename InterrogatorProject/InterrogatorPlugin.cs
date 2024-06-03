@@ -41,7 +41,7 @@ namespace InterrogatorMod
         {
             instance = this;
 
-            NetworkingAPI.RegisterMessageType<Interrogator.Components.SyncStabExplosion>();
+            NetworkingAPI.RegisterMessageType<Interrogator.Components.SyncBloodExplosion>();
 
             //easy to use logger
             Log.Init(Logger);

@@ -74,17 +74,22 @@ namespace InterrogatorMod.Interrogator
                 },
                 new CustomRendererInfo
                 {
-                    childName = "Bat",
+                    childName = "MeleeModel",
                     dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
-                    childName = "Visor",
+                    childName = "CleaverModel",
                     dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
-                    childName = "Jacket",
+                    childName = "JacketModel",
+                    dontHotpoo = true,
+                },
+                new CustomRendererInfo
+                {
+                    childName = "VisorModel",
                     dontHotpoo = true,
                 },
         };
@@ -198,7 +203,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "PASSIVE_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "PASSIVE_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texInterrogatorPassive"),
-                keywordTokens = new string[] { Tokens.spyBackstabKeyword  },
+                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword },
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "",
                 baseMaxStock = 1,
@@ -233,6 +238,7 @@ namespace InterrogatorMod.Interrogator
                 ));
             batSkillDef.stepCount = 2;
             batSkillDef.stepGraceDuration = 1f;
+            batSkillDef.keywordTokens = new string[]{ };
 
             Skills.AddPrimarySkills(bodyPrefab, batSkillDef);
         }
@@ -244,7 +250,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Affray",
                 skillNameToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_DESCRIPTION",
-                keywordTokens = new string[] { Tokens.agileKeyword },
+                keywordTokens = new string[] { Tokens.interrogatorPressuredKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texButcherKnifeIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(ThrowCleaver)),
@@ -253,7 +259,7 @@ namespace InterrogatorMod.Interrogator
                 interruptPriority = InterruptPriority.Skill,
 
                 baseMaxStock = 1,
-                baseRechargeInterval = 7f,
+                baseRechargeInterval = 5f,
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
@@ -287,7 +293,7 @@ namespace InterrogatorMod.Interrogator
                 activationStateMachineName = "Weapon2",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 8f,
+                baseRechargeInterval = 6f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -312,7 +318,7 @@ namespace InterrogatorMod.Interrogator
 
         private void AddSpecialSkills()
         {
-            SkillDef convict = Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef convict = Skills.CreateSkillDef<InterrogatorSkillDef>(new SkillDefInfo
             {
                 skillName = "Convict",
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_CONVICT_NAME",
@@ -324,7 +330,7 @@ namespace InterrogatorMod.Interrogator
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
-                baseRechargeInterval = 12f,
+                baseRechargeInterval = 16f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -333,7 +339,7 @@ namespace InterrogatorMod.Interrogator
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = true,
+                dontAllowPastMaxStocks = false,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
@@ -348,7 +354,7 @@ namespace InterrogatorMod.Interrogator
 
         private void InitializeScepter()
         {
-            convictScepterSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            convictScepterSkillDef = Skills.CreateSkillDef<InterrogatorSkillDef>(new SkillDefInfo
             {
                 skillName = "Convict Scepter",
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME",
@@ -360,7 +366,7 @@ namespace InterrogatorMod.Interrogator
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
-                baseRechargeInterval = 12f,
+                baseRechargeInterval = 16f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -405,15 +411,14 @@ namespace InterrogatorMod.Interrogator
             //currently not needed as with only 1 skin they will simply take the default meshes
             //uncomment this when you have another skin
             defaultSkin.meshReplacements = Modules.Skins.getMeshReplacements(assetBundle, defaultRendererinfos,
-                "meshSpy",
-                "meshRevolver",
-                "meshKnife",
-                "meshWatch",
-                "meshTie",
+                "meshInterrogator",
+                "meshBat",
+                "meshCleaver",
+                "meshJacket",
                 "meshVisor");
 
             //add new skindef to our list of skindefs. this is what we'll be passing to the SkinController
-
+            /*
             defaultSkin.gameObjectActivations = new SkinDef.GameObjectActivation[]
             {
                 new SkinDef.GameObjectActivation
@@ -422,11 +427,12 @@ namespace InterrogatorMod.Interrogator
                     shouldActivate = true,
                 }
             };
-
+            */
             skins.Add(defaultSkin);
             #endregion
 
             //uncomment this when you have a mastery skin
+            /*
             #region MasterySkin
 
             ////creating a new skindef as we did before
@@ -468,7 +474,7 @@ namespace InterrogatorMod.Interrogator
             skins.Add(masterySkin);
 
             #endregion
-
+            */
             skinController.skins = skins.ToArray();
         }
         #endregion skins
@@ -530,48 +536,89 @@ namespace InterrogatorMod.Interrogator
             {
                 if(self.baseNameToken == "KENKO_INTERROGATOR_NAME")
                 {
-                    InterrogatorController spy = self.gameObject.GetComponent<InterrogatorController>();
-                    if(spy)
+                    InterrogatorController iController = self.gameObject.GetComponent<InterrogatorController>();
+                    if(iController)
                     {
                         if (self.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff))
                         {
                             for(int i = 0; i < self.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
                             {
                                 self.attackSpeed += 0.05f;
-                                self.moveSpeed += 0.2f;
+                                self.damage += 0.2f;
                             }
                         }
                     }
+                }
+                if(self.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
+                {
+                    self.attackSpeed *= 1.15f;
+                    self.moveSpeed *= 1.15f;
+                    self.armor *= 0.9f;
+                    self.damage *= 0.9f;
                 }
             }
         }
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            if (!NetworkServer.active)
+            if (NetworkServer.active && self.alive || !self.godMode || self.ospTimer <= 0f)
             {
-                return;
-            }
-            if (!self.alive || self.godMode || self.ospTimer > 0f)
-            {
-                return;
-            }
-            CharacterBody victimBody = self.body;
-            CharacterBody attackerBody = null;
-            if (damageInfo.attacker)
-            {
-                attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
-            }
-            if (damageInfo.damage > 0 && !damageInfo.rejected && victimBody)
-            {
-                if (victimBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
+                CharacterBody victimBody = self.body;
+                CharacterBody attackerBody = null;
+                if (damageInfo.attacker)
                 {
-                    InterrogatorController spyController = victimBody.GetComponent<InterrogatorController>();
-                    if (spyController)
+                    attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
+                }
+                if (damageInfo.damage > 0 && !damageInfo.rejected && victimBody && attackerBody)
+                {
+                    if(victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)
+                        || !victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && attackerBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
                     {
-                     
+                        if (attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME" &&
+                            attackerBody.skillLocator.special.skillNameToken == INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
+                        {
+                            damageInfo.damage *= 0.25f;
+                        }
+                        else damageInfo.rejected = true;
+                    }
+                    if (victimBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
+                    {
+                        InterrogatorController iController = victimBody.GetComponent<InterrogatorController>();
+                        if (iController)
+                        {
+                            if (attackerBody && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
+                            {
+                                if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
+                                {
+                                    damageInfo.damage *= 0.1f;
+                                    attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, InterrogatorStaticValues.baseConvictTimerMax);
+                                }
+                                else
+                                {
+                                    attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
+                                }
+                            }
+                        }
+                    }
+                    else if (attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
+                    {
+                        InterrogatorController iController = attackerBody.GetComponent<InterrogatorController>();
+                        if (iController)
+                        {
+                            if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
+                            {
+                                damageInfo.damage *= 0.1f;
+                            }
+                            if (victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !victimBody.gameObject.GetComponent<StinkyLoserController>())
+                            {
+                                StinkyLoserController stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
+                                stink.interrogatorController = iController;
+                                attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+                            }
+                        }
                     }
                 }
             }
+
             orig.Invoke(self, damageInfo);
         }
         private static void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
@@ -579,6 +626,12 @@ namespace InterrogatorMod.Interrogator
             CharacterBody attackerBody = damageReport.attackerBody;
             if (attackerBody && damageReport.attackerMaster && damageReport.victim)
             {
+                if(attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME" && damageReport.damageInfo.HasModdedDamageType(DamageTypes.InterrogatorPressure))
+                {
+                    BlastAttack attack = new BlastAttack();
+                    attack.damageType = DamageType.AOE;
+                    attack.AddModdedDamageType(DamageTypes.InterrogatorPressureBleed);
+                }
             }
         }
         internal static void HUDSetup(HUD hud)
