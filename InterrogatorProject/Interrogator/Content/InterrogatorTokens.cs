@@ -47,8 +47,8 @@ namespace InterrogatorMod.Interrogator.Content
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Torment");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", $"Interrogator can be hit by anybody but he can also hit anybody. " +
-                $"Attackers that have hit interrogator are permanently marked as Guilty. Hitting Guilty targets grants attack speed and damage until they die (Once per target).");
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", $"<color=#FFBF66>Interrogator</color> can be hit by anybody but he can also hit anybody. " +
+                $"Attackers that have hit <color=#FFBF66>Interrogator</color> are permanently marked as <color=#FFBF66>Guilty</color>. Hitting <color=#FFBF66>Guilty</color> targets grants <style=cIsDamage>attack speed</style> and <style=cIsDamage>damage</style> until they die (Once per target).");
             #endregion
 
             #region Primary
@@ -60,23 +60,23 @@ namespace InterrogatorMod.Interrogator.Content
             #region Secondary
             Language.Add(prefix + "SECONDARY_AFFRAY_NAME", "Affray");
             Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $" Throw a cleaver that deals <style=cIsDamage>{InterrogatorStaticValues.cleaverDamageCoefficient * 100f}% </style>. " +
-                $"If Affray kills its target, apply Hemmorhage and Pressure to everyone in the area.");
+                $"If <color=#FFBF66>Affray</style> kills its target, apply <style=cIsDamage>Hemmorhage</style> and <color=#FFBF66>Pressure</style> to everyone in the area.");
             #endregion
 
             #region Utility 
             Language.Add(prefix + "UTILITY_FALSIFY_NAME", "Falsify");
-            Language.Add(prefix + "UTILITY_FALSIFY_DESCRIPTION", $"Dash forward dealing <style=cIsDamage>{InterrogatorStaticValues.falsifyDamageCoefficient * 100f}% damage</style> applying Guilty to targets hit.");
+            Language.Add(prefix + "UTILITY_FALSIFY_DESCRIPTION", $"Dash forward dealing <style=cIsDamage>{InterrogatorStaticValues.falsifyDamageCoefficient * 100f}% damage</style> applying <color=#FFBF66>Guilty</color> to targets hit.");
 
             #endregion
 
             #region Special
             Language.Add(prefix + "SPECIAL_CONVICT_NAME", "Convict");
-            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a Guilty enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add Guilty's buff to you. " +
-                $"During this time all external damage is negated but all your damage dealt to others is negated.");
+            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add <color=#FFBF66>Guilty's</color> buff to you. " +
+                $"During this time all external <style=cIsDamage>damage</style> is negated but all your <style=cIsDamage>damage</style> dealt to others is<style=cIsUtility>negated</style>.");
 
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_NAME", "Punish");
-            Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION", $"Target a Guilty enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add Guilty's buff to you. " +
-                $"During this time all external damage is negated but all your damage dealt to others is negated." + Tokens.ScepterDescription("Target enemies without guilty and damage you deal is no longer negated but is reduced by 75%."));
+            Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add <color=#FFBF66>Guilty's</color> buff to you. " +
+                $"During this time all external <style=cIsDamage>damage</style> is negated but all your <style=cIsDamage>damage</style> dealt to others is <style=cIsUtility>negated</style>." + Tokens.ScepterDescription("Target enemies without guilty and damage you deal is no longer negated but is reduced by 75%."));
             #endregion
 
             #region Achievements

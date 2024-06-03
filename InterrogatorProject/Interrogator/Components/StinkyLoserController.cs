@@ -16,10 +16,6 @@ namespace InterrogatorMod.Interrogator.Components
 
         private void Start()
         {
-            if(interrogatorController)
-            {
-                interrogatorController.StinkyLoserHasAlived();
-            }
         }
 
         private void FixedUpdate()
@@ -37,7 +33,7 @@ namespace InterrogatorMod.Interrogator.Components
         {
             if (interrogatorController) 
             {
-                interrogatorController.StinkyLoserHasDied();
+                interrogatorController.RemoveBuff();
             }
         }
     }

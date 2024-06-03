@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
 
-internal enum SpyCameraParams
+internal enum InterrogatorCameraParams
 {
     DEFAULT,
     AIM_PISTOL,
@@ -44,7 +44,7 @@ namespace InterrogatorMod.Modules
             return newParams;
         }
 
-        internal static CameraTargetParams.CameraParamsOverrideHandle OverrideCameraParams(CameraTargetParams camParams, SpyCameraParams camera, float transitionDuration = 0.5f)
+        internal static CameraTargetParams.CameraParamsOverrideHandle OverrideCameraParams(CameraTargetParams camParams, InterrogatorCameraParams camera, float transitionDuration = 0.5f)
         {
             CharacterCameraParamsData paramsData = GetNewParams(camera);
 
@@ -57,7 +57,7 @@ namespace InterrogatorMod.Modules
             return camParams.AddParamsOverride(request, transitionDuration);
         }
 
-        internal static CharacterCameraParams CreateCameraParamsWithData(SpyCameraParams camera)
+        internal static CharacterCameraParams CreateCameraParamsWithData(InterrogatorCameraParams camera)
         {
 
             CharacterCameraParams newPaladinCameraParams = ScriptableObject.CreateInstance<CharacterCameraParams>();
@@ -69,7 +69,7 @@ namespace InterrogatorMod.Modules
             return newPaladinCameraParams;
         }
 
-        internal static CharacterCameraParamsData GetNewParams(SpyCameraParams camera)
+        internal static CharacterCameraParamsData GetNewParams(InterrogatorCameraParams camera)
         {
             CharacterCameraParamsData paramsData = defaultCameraParams;
 
@@ -77,16 +77,16 @@ namespace InterrogatorMod.Modules
             {
 
                 default:
-                case SpyCameraParams.DEFAULT:
+                case InterrogatorCameraParams.DEFAULT:
                     paramsData = defaultCameraParams;
                     break;
-                case SpyCameraParams.AIM_PISTOL:
+                case InterrogatorCameraParams.AIM_PISTOL:
                     paramsData = aimCameraParams;
                     break;
-                case SpyCameraParams.AIM_SNIPER:
+                case InterrogatorCameraParams.AIM_SNIPER:
                     paramsData = sniperAimCameraParams;
                     break;
-                case SpyCameraParams.EMOTE:
+                case InterrogatorCameraParams.EMOTE:
                     paramsData = emoteCameraParams;
                     break;
             }

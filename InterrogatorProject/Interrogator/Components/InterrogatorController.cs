@@ -23,20 +23,14 @@ namespace InterrogatorMod.Interrogator.Components
 
         public string altSkinNameToken => InterrogatorSurvivor.INTERROGATOR_PREFIX + "MASTERY_SKIN_NAME";
 
-        public float convictTimerMax = 0f;
         private bool hasPlayed = false;
-        public bool isConvicted = false;
+        public bool isConvicted => this.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff);
         private bool stopwatchOut = false;
-        private bool hasSpun = true;
-        private bool hasPunishedChainStab = true;
-        private bool hasPlayedRecharge = true;
         public bool pauseTimer = false;
 
-        private float spinTimer = 0f;
-        private float gracePeriod = 0f;
-        public float convictTimer = 0f;
+        public float convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax;
 
-        private int guiltyUnitCounter = 0;
+        private int guiltyCounter = 0;
 
         private uint playID1;
 
@@ -105,25 +99,46 @@ namespace InterrogatorMod.Interrogator.Components
         {
             if (itemIndex == DLC1Content.Items.EquipmentMagazineVoid.itemIndex)
             {
-                this.convictTimerMax = InterrogatorStaticValues.baseConvictTimerMax + this.characterBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
+                this.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + this.characterBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
             }
         }
 
         #endregion
         private void FixedUpdate()
         {
-            if(convictTimer > 0f)
+            if(this.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
             {
-                convictTimer -= Time.fixedDeltaTime;
+                EnableSword();
                 onConvictDurationChange.Invoke();
+            }
+            else if (!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && guiltyCounter > 0 && !hasPlayed)
+            {
+                hasPlayed = true;
+                DisableSword();
+                if (NetworkServer.active)
+                {
+                    for (int i = 0; i < this.guiltyCounter; i++)
+                    {
+                        this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+                    }
+                }
+            }
+
+            if(skillLocator.secondary.CanExecute() && !childLocator.FindChild("CleaverModel").gameObject.activeSelf)
+            {
+                childLocator.FindChild("CleaverModel").gameObject.SetActive(true);
+            }
+            else if(!skillLocator.secondary.CanExecute() && childLocator.FindChild("CleaverModel").gameObject.activeSelf)
+            {
+                childLocator.FindChild("CleaverModel").gameObject.SetActive(false);
             }
         }
         public void ChangeCounter(int i)
         {
-            guiltyUnitCounter += i;
+            guiltyCounter += i;
         }
 
-        public void StinkyLoserHasAlived()
+        public void AddToCounter()
         {
             NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
             if (!identity) return;
@@ -131,17 +146,25 @@ namespace InterrogatorMod.Interrogator.Components
             new SyncCounter(identity.netId, this.gameObject, true).Send(NetworkDestination.Clients);
         }
 
-        public void StinkyLoserHasDied()
+        public void RemoveFromCounter()
         {
-            if(NetworkServer.active) this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
             NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
             if (!identity) return;
 
             new SyncCounter(identity.netId, this.gameObject, false).Send(NetworkDestination.Clients);
         }
+
+        public void RemoveBuff()
+        {
+            if (NetworkServer.active) this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+        }
         public void EnableSword()
         {
             if (!this.swordEffect.isPlaying) swordEffect.Play();
+        }
+        public void DisableSword() 
+        {
+            if(this.swordEffect.isPlaying) swordEffect.Stop();
         }
         private void OnDestroy()
         {

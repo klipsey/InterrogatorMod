@@ -10,39 +10,43 @@ namespace InterrogatorMod.Interrogator.SkillStates
 {
     public class Swing : BaseMeleeAttack
     {
+        public bool hitSelf = true;
         public override void OnEnter()
         {
             RefreshState();
-            hitboxGroupName = "Bat";
+            hitboxGroupName = "MeleeHitbox";
 
             damageType = DamageType.Generic;
             damageCoefficient = InterrogatorStaticValues.swingDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
-            baseDuration = 1.5f;
+            baseDuration = 0.625f;
 
             //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
             //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
-            attackStartPercentTime = 0.2f;
-            attackEndPercentTime = 0.3f;
+            attackStartPercentTime = 0.4f;
+            attackEndPercentTime = 0.6f;
 
             //this is the point at which the attack can be interrupted by itself, continuing a combo
-            earlyExitPercentTime = 0.5f;
+            earlyExitPercentTime = 1f;
 
             hitStopDuration = 0.012f;
             attackRecoil = 0.5f;
             hitHopVelocity = 4f;
 
-            swingSoundString = "sfx_driver_swing";
+            swingSoundString = this.isConvicting ? "Play_merc_sword_swing" : "sfx_driver_swing";
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingMuzzle1" : "SwingMuzzle2";
             playbackRateParam = "Swing.playbackRate";
             swingEffectPrefab = InterrogatorAssets.batSwingEffect;
-            moddedDamageTypeHolder.Add(DamageTypes.InterrogatorGuilty);
+            if (this.isConvicting)
+            {
+                moddedDamageTypeHolder.Add(DamageTypes.InterrogatorConvict);
+            }
             hitEffectPrefab = InterrogatorAssets.batHitEffect;
 
-            impactSound = InterrogatorAssets.batImpactSoundEvent.index;
+            impactSound = this.isConvicting ? InterrogatorAssets.swordImpactSoundEvent.index : InterrogatorAssets.batImpactSoundEvent.index;
 
             base.OnEnter();
         }
@@ -50,6 +54,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
         protected override void OnHitEnemyAuthority()
         {
             base.OnHitEnemyAuthority();
+            hitSelf = false;
         }
 
         protected override void FireAttack()
@@ -79,7 +84,33 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         protected override void PlayAttackAnimation()
         {
-            PlayCrossfade("Gesture, Override", "BatSwing" + (1 + swingIndex), playbackRateParam, duration * 1.2f, 0.05f);
+            PlayCrossfade("Gesture, Override", "Swing" + (1 + swingIndex), playbackRateParam, duration * 2.2f, 0.05f);
+        }
+
+        public override void OnExit()
+        {
+            if(hitSelf && !isConvicting)
+            {
+                DamageInfo selfDamage = new DamageInfo();
+                selfDamage.attacker = base.gameObject;
+                selfDamage.inflictor = null;
+                selfDamage.damage = this.damageCoefficient * this.damageStat * 0.2f;
+                selfDamage.procCoefficient = 0.5f;
+                selfDamage.crit = RollCrit();
+                selfDamage.damageType = DamageType.NonLethal;
+                selfDamage.AddModdedDamageType(DamageTypes.InterrogatorGuilty);
+                selfDamage.canRejectForce = true;
+                selfDamage.damageColorIndex = DamageColorIndex.SuperBleed;
+                selfDamage.force = Vector3.zero;
+                selfDamage.dotIndex = DotController.DotIndex.None;
+                selfDamage.position = base.transform.position;
+
+
+                this.healthComponent.TakeDamage(selfDamage);
+
+                Util.PlaySound("sfx_interrogator_self_damage", base.gameObject);
+            }
+            base.OnExit();
         }
     }
 }

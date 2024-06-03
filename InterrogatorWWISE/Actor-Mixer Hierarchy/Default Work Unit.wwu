@@ -1478,6 +1478,13 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="sfx_driver_swing" ID="{6678C5D7-6C20-4A8E-A2A9-5EC17318B411}" ShortID="873293265">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-680</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
@@ -4531,6 +4538,11 @@
 								</Sound>
 								<Sound Name="sfx_driver_dash" ID="{3A8EA895-EBA9-42D0-B96E-DC1D6B09AF6C}" ShortID="353500780">
 									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-880</Value>
+											</ValueList>
+										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
 												<Value>8</Value>
@@ -6322,6 +6334,72 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="recharged" ID="{FF6DBFE9-6695-4BCC-8563-296696062E74}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_interrogator_dash" ID="{C61A0D3B-7C2C-433B-BF43-0D9E3E7A439F}" ShortID="760991110">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_interrogator_dash" ID="{0D488138-4303-4155-A5B7-D34A32A0E6DF}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_interrogator_dash.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="682791944"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_interrogator_dash" ID="{0D488138-4303-4155-A5B7-D34A32A0E6DF}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_interrogator_self_damage" ID="{5A0FAC63-7DE0-4B8C-A21E-E553BB565AC7}" ShortID="636991303">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_interrogator_self_damage" ID="{527E932C-FEB5-42A7-B62D-E68850A6CC13}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_interrogator_self_damage.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="308400887"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_interrogator_self_damage" ID="{527E932C-FEB5-42A7-B62D-E68850A6CC13}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_interrogator_point" ID="{24700FA9-FE22-4F36-9878-A70CB1DD12CA}" ShortID="648015999">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_interrogator_point" ID="{F5CEC74A-2985-4138-A085-DA01F256C500}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_interrogator_point.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="788103908"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_interrogator_point" ID="{F5CEC74A-2985-4138-A085-DA01F256C500}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

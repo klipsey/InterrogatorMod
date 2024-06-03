@@ -12,7 +12,7 @@ namespace InterrogatorMod.Interrogator.Content
             Modules.Content.AddEntityState(typeof(BaseInterrogatorState));
             Modules.Content.AddEntityState(typeof(Swing));
             Modules.Content.AddEntityState(typeof(ThrowCleaver));
-            Modules.Content.AddEntityState(typeof(GuiltyDash));
+            Modules.Content.AddEntityState(typeof(Falsify));
             Modules.Content.AddEntityState(typeof(Convict));
             Modules.Content.AddEntityState(typeof(ConvictScepter));
         }

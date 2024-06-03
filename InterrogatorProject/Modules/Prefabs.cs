@@ -210,7 +210,7 @@ namespace InterrogatorMod.Modules
             bodyComponent.sprintingSpeedMultiplier = 1.45f;
 
             bodyComponent.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
-            bodyComponent.bodyFlags |= CharacterBody.BodyFlags.HasBackstabPassive;
+
             bodyComponent.rootMotionInMainState = false;
 
             bodyComponent.hullClassification = HullClassification.Human;

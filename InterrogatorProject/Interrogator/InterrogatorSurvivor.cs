@@ -153,11 +153,17 @@ namespace InterrogatorMod.Interrogator
         private void AdditionalBodySetup()
         {
             AddHitboxes();
+            bool tempAdd(CharacterBody body) => body.HasBuff(InterrogatorBuffs.interrogatorConvictBuff);
+            bool tempAdd2(CharacterBody body) => body.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
+            float pee(CharacterBody body) => 2f * body.radius;
             bodyPrefab.AddComponent<InterrogatorController>();
+            bodyPrefab.AddComponent<InterrogatorTracker>();
+            TempVisualEffectAPI.AddTemporaryVisualEffect(InterrogatorAssets.interrogatorConvicted, pee, tempAdd);
+            TempVisualEffectAPI.AddTemporaryVisualEffect(InterrogatorAssets.interrogatorGuilty, pee, tempAdd2);
         }
         public void AddHitboxes()
         {
-            Prefabs.SetupHitBoxGroup(characterModelObject, "KnifeHitbox", "KnifeHitbox");
+            Prefabs.SetupHitBoxGroup(characterModelObject, "MeleeHitbox", "MeleeHitbox");
         }
 
         public override void InitializeEntityStateMachines()
@@ -267,7 +273,7 @@ namespace InterrogatorMod.Interrogator
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
-                beginSkillCooldownOnSkillEnd = false,
+                beginSkillCooldownOnSkillEnd = true,
                 mustKeyPress = false,
 
                 isCombatSkill = true,
@@ -327,7 +333,7 @@ namespace InterrogatorMod.Interrogator
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpyCloak"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Convict)),
-                activationStateMachineName = "Weapon",
+                activationStateMachineName = "Interrogate",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 16f,
@@ -363,7 +369,7 @@ namespace InterrogatorMod.Interrogator
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpyCloak"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ConvictScepter)),
-                activationStateMachineName = "Weapon",
+                activationStateMachineName = "Interrogate",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 16f,
@@ -495,7 +501,7 @@ namespace InterrogatorMod.Interrogator
 
         private void AddHooks()
         {
-            HUD.onHudTargetChangedGlobal += HUDSetup;
+            //HUD.onHudTargetChangedGlobal += HUDSetup;
             On.RoR2.UI.LoadoutPanelController.Rebuild += LoadoutPanelController_Rebuild;
             On.RoR2.HealthComponent.TakeDamage += new On.RoR2.HealthComponent.hook_TakeDamage(HealthComponent_TakeDamage);
             RoR2.GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
@@ -608,12 +614,6 @@ namespace InterrogatorMod.Interrogator
                             {
                                 damageInfo.damage *= 0.1f;
                             }
-                            if (victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !victimBody.gameObject.GetComponent<StinkyLoserController>())
-                            {
-                                StinkyLoserController stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
-                                stink.interrogatorController = iController;
-                                attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                            }
                         }
                     }
                 }
@@ -628,14 +628,30 @@ namespace InterrogatorMod.Interrogator
             {
                 if(attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME" && damageReport.damageInfo.HasModdedDamageType(DamageTypes.InterrogatorPressure))
                 {
-                    BlastAttack attack = new BlastAttack();
-                    attack.damageType = DamageType.AOE;
-                    attack.AddModdedDamageType(DamageTypes.InterrogatorPressureBleed);
+                    BlastAttack blastAttack = new BlastAttack();
+                    blastAttack.attacker = damageReport.attacker;
+                    blastAttack.inflictor = damageReport.attacker;
+                    blastAttack.teamIndex = damageReport.attackerTeamIndex;
+                    blastAttack.baseDamage = 0.1f;
+                    blastAttack.baseForce = 0f;
+                    blastAttack.position = damageReport.victim.body.corePosition;
+                    blastAttack.radius = 12f;
+                    blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+                    blastAttack.bonusForce = Vector3.zero;
+                    blastAttack.damageType = DamageType.AOE;
+                    blastAttack.AddModdedDamageType(DamageTypes.InterrogatorPressureBleed);
+                    blastAttack.Fire();
+
+                    if (damageReport.victim.gameObject.TryGetComponent<NetworkIdentity>(out var identity))
+                    {
+                        new SyncBloodExplosion(identity.netId, damageReport.victim.gameObject).Send(NetworkDestination.Clients);
+                    }
                 }
             }
         }
         internal static void HUDSetup(HUD hud)
         {
+            /*
             if (hud.targetBodyObject && hud.targetMaster && hud.targetMaster.bodyPrefab == InterrogatorSurvivor.characterPrefab)
             {
                 if (!hud.targetMaster.hasAuthority) return;
@@ -690,6 +706,7 @@ namespace InterrogatorMod.Interrogator
                 stealthComponent.durationBar = chargeBarAmmo.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
                 stealthComponent.durationBarColor = chargeBarAmmo.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
             }
+            */
         }
     }
 }

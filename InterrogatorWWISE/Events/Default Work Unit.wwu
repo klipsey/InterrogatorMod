@@ -1323,6 +1323,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_interrogator_dash" ID="{09DF98C5-5833-4948-B037-3D9779EBC5B6}">
+					<ChildrenList>
+						<Action Name="" ID="{69ADA33E-F4E7-4C23-9E01-CA92FE05967A}" ShortID="299959993">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_interrogator_dash" ID="{C61A0D3B-7C2C-433B-BF43-0D9E3E7A439F}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_interrogator_self_damage" ID="{B19B9BDF-B4D5-4962-B000-D56DBC50B235}">
+					<ChildrenList>
+						<Action Name="" ID="{526D1A2F-F5F7-40DF-8102-9D39672DBBF9}" ShortID="708722884">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_interrogator_self_damage" ID="{5A0FAC63-7DE0-4B8C-A21E-E553BB565AC7}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_interrogator_point" ID="{4B2F3BB0-49D1-43D7-A7EA-0C83DC072C0C}">
+					<ChildrenList>
+						<Action Name="" ID="{9920667F-930E-4F4E-B94F-084D5F3E90DB}" ShortID="1019288531">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_interrogator_point" ID="{24700FA9-FE22-4F36-9878-A70CB1DD12CA}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

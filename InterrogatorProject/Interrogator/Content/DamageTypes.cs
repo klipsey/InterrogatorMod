@@ -20,6 +20,7 @@ namespace InterrogatorMod.Interrogator.Content
         public static DamageAPI.ModdedDamageType Default;
         public static DamageAPI.ModdedDamageType InterrogatorPressure;
         public static DamageAPI.ModdedDamageType InterrogatorGuilty;
+        public static DamageAPI.ModdedDamageType InterrogatorConvict;
         public static DamageAPI.ModdedDamageType InterrogatorPressureBleed;
 
         internal static void Init()
@@ -27,6 +28,7 @@ namespace InterrogatorMod.Interrogator.Content
             Default = DamageAPI.ReserveDamageType();
             InterrogatorPressure = DamageAPI.ReserveDamageType();
             InterrogatorGuilty = DamageAPI.ReserveDamageType();
+            InterrogatorConvict = DamageAPI.ReserveDamageType();
             InterrogatorPressureBleed = DamageAPI.ReserveDamageType();
             Hook();
         }
@@ -47,23 +49,39 @@ namespace InterrogatorMod.Interrogator.Content
             EntityStateMachine victimMachine = victimBody.GetComponent<EntityStateMachine>();
             CharacterBody attackerBody = damageReport.attackerBody;
             GameObject attackerObject = damageReport.attacker.gameObject;
-            InterrogatorController iComponent = attackerBody.GetComponent<InterrogatorController>();
+            InterrogatorController iController = attackerBody.GetComponent<InterrogatorController>();
             if (NetworkServer.active)
             {
-                if (iComponent)
+                if (iController && attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
                 {
+                    if (victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !victimBody.gameObject.GetComponent<StinkyLoserController>())
+                    {
+                        StinkyLoserController stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
+                        stink.interrogatorController = iController;
+                        attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+                    }
+
                     if (damageInfo.HasModdedDamageType(InterrogatorGuilty))
                     {
                         if (victimBody && !victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
                         {
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                             {
-                                attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
+                                victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
                             }
                             else
                             {
-                                attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
+                                victimBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                             }
+                        }
+                    }
+
+                    if (damageInfo.HasModdedDamageType(InterrogatorConvict))
+                    {
+                        if (victimBody && victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
+                        {
+                            attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+                            iController.AddToCounter();
                         }
                     }
 
@@ -71,12 +89,24 @@ namespace InterrogatorMod.Interrogator.Content
                     {
                         if (victimBody && victimBody.healthComponent && victimBody.healthComponent.alive)
                         {
-                            DotController.InflictDot(
-                                victim.gameObject,
-                                damageInfo.attacker,
-                                RoR2.DotController.DotIndex.SuperBleed,
-                                15f * damageInfo.procCoefficient,
-                                1f);
+                            if(victimBody.teamComponent.teamIndex == TeamIndex.Player)
+                            {
+                                DotController.InflictDot(
+                                    victim.gameObject,
+                                    damageInfo.attacker,
+                                    DotController.DotIndex.SuperBleed,
+                                   5f * damageInfo.procCoefficient,
+                                    0.25f);
+                            }
+                            else
+                            {
+                                DotController.InflictDot(
+                                    victim.gameObject,
+                                    damageInfo.attacker,
+                                    DotController.DotIndex.SuperBleed,
+                                    15f * damageInfo.procCoefficient,
+                                    1f);
+                            }
                             victimBody.AddBuff(InterrogatorBuffs.interrogatorPressuredBuff);
                         }
                     }

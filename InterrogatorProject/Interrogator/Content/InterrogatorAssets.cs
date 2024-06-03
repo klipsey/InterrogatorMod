@@ -35,6 +35,11 @@ namespace InterrogatorMod.Interrogator.Content
 
         internal static GameObject batHitEffectRed;
 
+        internal static GameObject dashEffect;
+
+        internal static GameObject interrogatorGuilty;
+        internal static GameObject interrogatorConvicted;
+
         //Models
         internal static Mesh swordMesh;
         //Projectiles
@@ -44,7 +49,8 @@ namespace InterrogatorMod.Interrogator.Content
         internal static NetworkSoundEventDef swordImpactSoundEvent;
 
         //Colors
-        internal static Color interrogatorColor = Color.red;
+        internal static Color interrogatorColor = new Color(255f / 255f, 191f / 255f, 102f / 255f);
+        internal static Color interrogatorSecondaryColor = new Color(70f / 255f, 63f / 255f, 94f / 255f);
 
         //Crosshair
         public static void Init(AssetBundle assetBundle)
@@ -112,6 +118,16 @@ namespace InterrogatorMod.Interrogator.Content
             bloodSpurtEffect.transform.Find("Blood").GetComponent<ParticleSystemRenderer>().material = bloodMat2;
             bloodSpurtEffect.transform.Find("Trails").GetComponent<ParticleSystemRenderer>().trailMaterial = bloodMat2;
 
+            dashEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherDashEffect.prefab").WaitForCompletion().InstantiateClone("InterrogatorDashEffect");
+            dashEffect.AddComponent<NetworkIdentity>();
+            Object.Destroy(dashEffect.transform.Find("Point light").gameObject);
+            Object.Destroy(dashEffect.transform.Find("Flash, White").gameObject);
+            Object.Destroy(dashEffect.transform.Find("NoiseTrails").gameObject);
+            dashEffect.transform.Find("Donut").localScale *= 0.5f;
+            dashEffect.transform.Find("Donut, Distortion").localScale *= 0.5f;
+
+            Modules.Content.CreateAndAddEffectDef(dashEffect);
+
             batHitEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/HitsparkBandit.prefab").WaitForCompletion().InstantiateClone("InterreogatorBatHitEffect");
             batHitEffect.AddComponent<NetworkIdentity>();
             Modules.Content.CreateAndAddEffectDef(batHitEffect);
@@ -122,17 +138,12 @@ namespace InterrogatorMod.Interrogator.Content
             batHitEffectRed.transform.Find("Particles").Find("TriangleSparks").gameObject.GetComponent<ParticleSystemRenderer>().material.SetColor("_TintColor", Color.red);
             Modules.Content.CreateAndAddEffectDef(batHitEffectRed);
 
-            batSwingEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("ScoutBatSwing", false);
+            batSwingEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("InterrogatorBatSwing", false);
             batSwingEffect.transform.GetChild(0).GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressSwingTrail.mat").WaitForCompletion();
             var swing = batSwingEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main;
             swing.startLifetimeMultiplier *= 2f;
 
-            batSwingEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("SpyAltSwordSwing");
-            batSwingEffect.transform.GetChild(0).gameObject.GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Imp/matImpSwipe.mat").WaitForCompletion();
-            var swing2 = batSwingEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main;
-            swing2.startLifetimeMultiplier *= 2f;
-
-            bloodSplatterEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherSlamImpact.prefab").WaitForCompletion().InstantiateClone("SpySplat", true);
+            bloodSplatterEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherSlamImpact.prefab").WaitForCompletion().InstantiateClone("InterrogatorSplat", true);
             bloodSplatterEffect.AddComponent<NetworkIdentity>();
             bloodSplatterEffect.transform.GetChild(0).gameObject.SetActive(false);
             bloodSplatterEffect.transform.GetChild(1).gameObject.SetActive(false);
@@ -153,6 +164,26 @@ namespace InterrogatorMod.Interrogator.Content
             bloodSplatterEffect.transform.GetChild(15).gameObject.SetActive(false);
             bloodSplatterEffect.transform.localScale = Vector3.one;
             InterrogatorMod.Modules.Content.CreateAndAddEffectDef(bloodSplatterEffect);
+
+            Material fakeCripple = Object.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/CrippleWard/matLunarWardCripple.mat").WaitForCompletion());
+            fakeCripple.SetTexture("_RemapTex", mainAssetBundle.LoadAsset<Texture>("texRampConvicted"));
+            interrogatorConvicted = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/CrippleEffect.prefab").WaitForCompletion().InstantiateClone("Convicted", true);
+            interrogatorConvicted.AddComponent<NetworkIdentity>();
+            var guilt = interrogatorConvicted.transform.Find("Visual").Find("SpookySmoke").gameObject.GetComponent<ParticleSystem>().main;
+            guilt.startColor = interrogatorSecondaryColor;
+            interrogatorConvicted.transform.Find("Visual").GetChild(0).gameObject.GetComponent<MeshRenderer>().materials = new Material[1];
+            interrogatorConvicted.transform.Find("Visual").GetChild(0).gameObject.GetComponent<MeshRenderer>().materials[0] = fakeCripple;
+            interrogatorConvicted.transform.Find("Visual").GetChild(1).gameObject.GetComponent<MeshRenderer>().materials = new Material[1];
+            interrogatorConvicted.transform.Find("Visual").GetChild(1).gameObject.GetComponent<MeshRenderer>().materials[0] = fakeCripple;
+            interrogatorConvicted.transform.Find("Visual").Find("Rings").gameObject.GetComponent<ParticleSystemRenderer>().material = fakeCripple;
+
+            Material fakeMerc = Object.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Merc/matMercExposed.mat").WaitForCompletion());
+            fakeMerc.SetTexture("_MainTex", mainAssetBundle.LoadAsset<Texture>("texGuilty"));
+            fakeMerc.SetTexture("_RemapTex", null);
+            fakeMerc.SetColor("_TintColor", interrogatorColor);
+            interrogatorGuilty = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercExposeEffect.prefab").WaitForCompletion().InstantiateClone("Guilty", true);
+            interrogatorGuilty.AddComponent<NetworkIdentity>();
+            interrogatorGuilty.transform.Find("Visual, On").Find("PulseEffect, Ring").gameObject.GetComponent<ParticleSystemRenderer>().material = fakeMerc;
         }
 
         #endregion
@@ -165,7 +196,7 @@ namespace InterrogatorMod.Interrogator.Content
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().hitSoundString = "sfx_scout_cleaver_miss";
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().enemyHitSoundString = "sfx_scout_cleaver_hit";
 
-            cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BlightOnHit;
+            cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
             DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaverPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             moddedDamage.Add(DamageTypes.InterrogatorPressure);
 
@@ -189,6 +220,7 @@ namespace InterrogatorMod.Interrogator.Content
             cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab.transform.GetChild(0).localScale = Vector3.one * 0.015f;
             cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = batMat;
 
+
             Modules.Content.AddProjectilePrefab(cleaverPrefab);
         }
         #endregion
@@ -196,8 +228,8 @@ namespace InterrogatorMod.Interrogator.Content
         #region sounds
         private static void CreateSounds()
         {
-            batImpactSoundEvent = Modules.Content.CreateAndAddNetworkSoundEventDef("sfx_scout_bat_impact");
-            swordImpactSoundEvent = Modules.Content.CreateAndAddNetworkSoundEventDef("sfx_driver_knife_hit");
+            batImpactSoundEvent = Modules.Content.CreateAndAddNetworkSoundEventDef("sfx_interrogator_self_damage");
+            swordImpactSoundEvent = Modules.Content.CreateAndAddNetworkSoundEventDef("Play_merc_sword_impact");
         }
         #endregion
 

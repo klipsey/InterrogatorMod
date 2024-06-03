@@ -32,8 +32,8 @@ namespace InterrogatorMod.Modules.BaseStates
             if (!interrogatorController)
             {
                 interrogatorController = base.GetComponent<InterrogatorController>();
+                isConvicting = interrogatorController.isConvicted;
             }
-            isConvicting = interrogatorController.
         }
     }
 }

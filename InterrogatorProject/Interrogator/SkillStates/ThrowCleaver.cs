@@ -12,9 +12,10 @@ namespace InterrogatorMod.Interrogator.SkillStates
     public class ThrowCleaver : GenericProjectileBaseState
     {
         public static float baseDuration = 0.2f;
-        public static float baseDelayDuration = 0.1f * baseDuration;
+        public static float baseDelayDuration = 0.3f * baseDuration;
         public GameObject cleaver = InterrogatorAssets.cleaverPrefab;
         public InterrogatorController interrogatorController;
+        private ChildLocator childLocator;
         public override void OnEnter()
         {
             interrogatorController = base.gameObject.GetComponent<InterrogatorController>();
@@ -50,6 +51,11 @@ namespace InterrogatorMod.Interrogator.SkillStates
             base.FixedUpdate();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Pain;
@@ -59,7 +65,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
         {
             if (base.GetModelAnimator())
             {
-                base.PlayAnimation("Gesture, Override", "ThrowCleaver", "Cleaver.playbackRate", this.duration);
+                base.PlayAnimation("Gesture, Override", "SwingCleaver", "Swing.playbackRate", this.duration * 5.5f);
             }
         }
     }

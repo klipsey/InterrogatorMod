@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1873927885
+CRC: 772681223
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dfb7492d9e154ec61f5c4d3726973e88
+    Hash: 94d1790d7d9801ff0643d205b5cfa552
   TypeTreeHash:
     serializedVersion: 2
     Hash: 42d2694ece3e6464c0822cad42100938
@@ -86,15 +86,16 @@ Assets:
 - Assets/Interrogator/interrogator_emoteskeleton.prefab
 - Assets/Interrogator/Meshes/meshCleaver.mesh
 - Assets/Interrogator/Animations/Armature_CSSIdle.anim
+- Assets/Interrogator/Textures/texGuilty.png
 - Assets/Interrogator/VFX/BloodSpurtEffect.prefab
 - Assets/Interrogator/HUD/ChargeBar.prefab
 - Assets/Interrogator/VFX/CritLightning.prefab
+- Assets/Interrogator/Animations/Armature_CSSIdleIn.anim
 - Assets/Interrogator/VFX/matShockwave.mat
 - Assets/Interrogator/Projectiles/meshSapper.mesh
 - Assets/Interrogator/Animations/Armature_BatSwing1.anim
 - Assets/Interrogator/VFX/Badass/BigExplosion.prefab
 - Assets/Interrogator/VFX/Badass/MetalHitEffect.prefab
-- Assets/Interrogator/Animations/Armature_CSSIdleIn.anim
 - Assets/Interrogator/Projectiles/CoinImpactHit.prefab
 - Assets/Interrogator/HUD/Textures/texBulletIndicator.png
 - Assets/Interrogator/Icons/Skill/texSpyCloak.png
@@ -105,15 +106,16 @@ Assets:
 - Assets/Interrogator/Icons/Skill/texSpyAmbassador.png
 - Assets/Interrogator/Animations/maskInterrogatorAim.mask
 - Assets/Interrogator/Animations/Armature_BatSwingCleaver.anim
+- Assets/Interrogator/Textures/texGuiltyBuff.png
 - Assets/Interrogator/Icons/Skill/texSpyWatch.png
 - Assets/Interrogator/Projectiles/CoinProjectile.prefab
 - Assets/Interrogator/Animations/Armature_IdleIn.anim
-- Assets/Interrogator/Icons/texSpyIcon.png
 - Assets/Interrogator/Materials/matInterrogator.mat
 - Assets/Interrogator/Animations/Armature_RunB.anim
 - Assets/Interrogator/Animations/Armature_SprintFast.anim
 - Assets/Interrogator/Animations/animInterrogator.controller
 - Assets/Interrogator/Textures/texInterrogatorEmission.png
+- Assets/Interrogator/Textures/texRampConvicted.png
 - Assets/Interrogator/Textures/texInterrogator.png
 - Assets/Interrogator/Icons/Skill/texSpyStab.png
 - Assets/Interrogator/VFX/texShockwave.png
@@ -133,6 +135,7 @@ Assets:
 - Assets/Interrogator/mdlInterrogator.prefab
 - Assets/Interrogator/VFX/texSpyStreak.png
 - Assets/Interrogator/Animations/Armature_BatSwing2.anim
+- Assets/Interrogator/Textures/texConvictBuff.png
 - Assets/Interrogator/VFX/matSpyDefault.mat
 - Assets/Interrogator/Icons/texDefaultSkin.png
 - Assets/Interrogator/interrogatorCleaver.prefab
@@ -170,6 +173,7 @@ Assets:
 - Assets/Interrogator/HUD/Textures/texSniperBulletIndicator.png
 - Assets/Interrogator/Icons/texMonsoonSkin.png
 - Assets/Interrogator/Animations/maskInterrogatorImpact.mask
+- Assets/Interrogator/Textures/texGuiltyDebuff.png
 - Assets/Interrogator/Meshes/meshVisor.mesh
 - Assets/Interrogator/Animations/Armature_JumpSprint.anim
 - Assets/Interrogator/VFX/matBlackLightning.mat

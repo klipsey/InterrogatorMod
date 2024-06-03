@@ -22,7 +22,7 @@ namespace InterrogatorMod.Modules
             initialized = true;
             AKRESULT akResult = AkSoundEngine.AddBasePath(SoundBankDirectory);
 
-            AkSoundEngine.LoadBank("spy_bank.bnk", out _);
+            AkSoundEngine.LoadBank("interrogator_bank.bnk", out _);
         }
     }
 }
