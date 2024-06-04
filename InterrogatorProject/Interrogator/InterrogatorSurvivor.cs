@@ -256,7 +256,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Affray",
                 skillNameToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_DESCRIPTION",
-                keywordTokens = new string[] { Tokens.interrogatorPressuredKeyword },
+                keywordTokens = new string[] { Tokens.interrogatorPressuredKeyword, Tokens.slayerKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texInterrogatorCleaverIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(ThrowCleaver)),
@@ -549,8 +549,8 @@ namespace InterrogatorMod.Interrogator
                         {
                             for(int i = 0; i < self.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
                             {
-                                self.attackSpeed += 0.05f;
-                                self.damage += 0.2f;
+                                self.attackSpeed += 0.15f;
+                                self.damage += 0.5f;
                             }
                         }
                     }

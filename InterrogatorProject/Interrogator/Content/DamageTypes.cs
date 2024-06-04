@@ -107,7 +107,7 @@ namespace InterrogatorMod.Interrogator.Content
                                     15f * damageInfo.procCoefficient,
                                     1f);
                             }
-                            victimBody.AddBuff(InterrogatorBuffs.interrogatorPressuredBuff);
+                            victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorPressuredBuff, 7f);
                         }
                     }
                 }

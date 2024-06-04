@@ -1,77 +1,66 @@
-# Spy
+# Interrogator
 
-[![Spy-Con512.png](https://i.postimg.cc/mk6qTZYz/Spy-Con512.png)]()
-
-[![Screenshot-2024-05-17-041509.png](https://i.postimg.cc/MGkwj1rK/Screenshot-2024-05-17-041509.png)]()
-
-[![Screenshot-2024-05-17-041447.png](https://i.postimg.cc/B6L2w9BC/Screenshot-2024-05-17-041447.png)]()
+## ALL ART AND CONCEPT BY GOODGUY. COMMISSION HIM! discord: youredoingoodlad
+[![Tormentor-AKA-Interrogator.png](https://i.postimg.cc/MH1VQXPf/Tormentor-AKA-Interrogator.png)](https://postimg.cc/dZthMQKJ)
 
 # Overview
 
-### The Spy is a squishy melee assassin who excels at killing high priority targets with ease.
+### Interrogator relishes the pain of others. Don't have too much fun hurting your allies, or do...
+
+[![nya.png](https://i.postimg.cc/NFNDMK58/nya.png)](https://postimg.cc/FkL3Csb1)
 
 # Skills
 
-https://youtu.be/24HZ_6QtyVA
+## Passive: **Torment**
 
-[![Thumbnail.png](https://i.postimg.cc/MGNWGCQX/Thumbnail.png)](https://youtu.be/24HZ_6QtyVA)
+- Interrogator can hit and be hit by both allies and enemies. Attackers that have hit Interrogator are permanently marked as Guilty. Hitting Guilty targets grants attack speed and damage until they die (Once per target).
+                
+[![tex-Interrogator-Passive.png](https://i.postimg.cc/NFn71WYZ/tex-Interrogator-Passive.png)](https://postimg.cc/BPxK37jC)
 
-| Skill Slot | Skill Name | Cooldown | Description |
-| :-------- | :------- | :------ | :------------- |
-| Passive | Backstab    |     N/A    |  Spy can Backstab enemies with his Knife, causing a Critical Strike that instantly kills weaker enemies. |
-| Primary | Diamondback |   N/A      | Fire a bullet for 320% damage. Backstab kills grant Espionage. Max 5 stacks.                                 |           
-| Primary | Ambassador |     N/A    |   Fire a bullet for 230% damage. Landing a headshot Critically Strikes. |
-| Secondary | Stab    |   5 seconds   | Prepare your Knife. Release to swing for 500% damage.                |
-| Secondary | Big Earner    | 7 seconds  | Opportunist. Prepare your Knife. Release to swing for 500% damage Backstab kills grant movement speed and barrier as well as resetting this abilities cooldown for a short period.                |
-| Utility  | Sap   |    8 seconds    |  Dash in a direction or Flip in the air. Plant a Sapper on a nearby enemy, shocking them and nearby enemies for 5 seconds.               |
-| Special | Cloak |  8 second recharge   | Become cloaked for up to 8 seconds. While cloaked, Spy cannot shoot.|
-| Special | Deadman's Watch | 10 seconds | Take out your Deadman's Watch. Taking damage grants invisiblity for 6 seconds at the cost of up to 25% HP. While your Deadman's Watch is out, Spy cannot shoot. |
+## Primary: **Brutal Bash**
+
+- Swing in front dealing damage Missing the attack causes you to take damage instead.
+ 
+[![tex-Swing-Icon.png](https://i.postimg.cc/7hhnJxvg/tex-Swing-Icon.png)](https://postimg.cc/ctqnVGLH)
+
+## Secondary: **Affray**
+
+- Throw a cleaver that deals damage. If Affray kills its target, apply Hemmorhage and Pressure to everyone in the area.
+
+[![tex-Interrogator-Cleaver-Icon.png](https://i.postimg.cc/VsZRQbM4/tex-Interrogator-Cleaver-Icon.png)](https://postimg.cc/0rmm7jVJ)
+
+## Utility: **Falsify**
+
+- Dash forward dealing damage applying Guilty to targets hit.
+
+[![tex-Falsify-Icon.png](https://i.postimg.cc/4dB13Y0f/tex-Falsify-Icon.png)](https://postimg.cc/1nVFC3P2)
+
+## Special: **Convict**
+
+- Target a Guilty enemy and fight them for 10 seconds. Your primary can no longer hit you but can continuously stack Guilty's buff. During Convict all external damage is negated including your own.
+
+[![tex-Convict-Icon.png](https://i.postimg.cc/Jn1qmNPY/tex-Convict-Icon.png)](https://postimg.cc/SXv8fM0c)
 
 | Keywords | Description|
 | :------- |:---- |
-| Backstab |Deals 2x damage against champion enemies and 30% HP or more to elites. |
-| Opportunist | Your HP and health regneration are permanently reduced by 25%. Backstabs that don't kill champion enemies grant movement speed and barrier.|
-| Epsionage | Your next shot has 100% Crit Chance. Rolling a Critical Strike with Espionage stacks increases damage by 2x instead. Backstabs will always grant Espionage stacks on champion enemies.|
+| Pressured |Boost attack speed and move speed but lowers armor and damage (decreased ally negative stats). |
+| Ally Damage | Allies take and deal less damage each other and Guilty expires from them after 10 seconds. |
 
-## Passive: **Backstab**
-
-[![Spy-Passive.gif](https://i.postimg.cc/gjHtZ584/Spy-Passive.gif)]()
-
-## Primary: **The Diamondback**
-
-[![Spy-Primary.gif](https://i.postimg.cc/CK92TbwC/Spy-Primary.gif)]()
-
-## Secondary: **Stab**
-
-[![Spy-Secondary.gif](https://i.postimg.cc/xCH40qdw/Spy-Secondary.gif)]()
-
-## Utility: **Sap**
-
-[![Spy-Utility.gif](https://i.postimg.cc/9MD0n5Jg/Spy-Utility.gif)]()
-
-## Special: **Deadman's Watch**
-
-[![Spy-Special.gif](https://i.postimg.cc/P5HLr75N/Spy-Special.gif)]()
-
-This character was also made in 24 hours! This release was made afterward with some polishing.
-
-Download other tf2 akin characters: 
+Check out my other mods:
 
 https://thunderstore.io/package/tsuyoikenko/Scout/
 
-https://thunderstore.io/package/EnforcerGang/SniperClassic/
+https://thunderstore.io/package/tsuyoikenko/Seamstress/
 
-https://thunderstore.io/package/EnforcerGang/Rocket/
-
-https://thunderstore.io/package/EnforcerGang/Enforcer/ (Nemforcer)
-
-https://thunderstore.io/package/PopcornFactory/Arsonist_Mod/ 
+https://thunderstore.io/package/tsuyoikenko/Spy/
 
 Contact me on Discord: https://discord.gg/3NaMEsvYeD
 
 # Credits
 
-tsuyoikenko - Code, model, animations.
+tsuyoikenko - Code, model, animations, skill icons.
+
+goodguy - Concept art, lore, being awesome.
 
 TheTimeSweeper - Incredible new Henry template.
 

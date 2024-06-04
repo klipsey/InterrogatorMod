@@ -212,7 +212,7 @@ namespace InterrogatorMod.Interrogator.Content
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().hitSoundString = "sfx_scout_cleaver_miss";
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().enemyHitSoundString = "sfx_scout_cleaver_hit";
 
-            cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.Generic;
+            cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BonusToLowHealth;
             DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaverPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             moddedDamage.Add(DamageTypes.InterrogatorPressure);
 
