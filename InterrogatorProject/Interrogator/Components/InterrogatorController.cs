@@ -112,8 +112,6 @@ namespace InterrogatorMod.Interrogator.Components
         {
             if ((!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || !convictedVictimBody.healthComponent.alive) && guiltyCounter > 0 && !hasPlayed)
             {
-                Log.Debug(convictedVictimBody.healthComponent.alive);
-                Log.Debug(convictedVictimBody.baseNameToken);
                 hasPlayed = true;
                 DisableSword();
             }

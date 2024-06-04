@@ -11,7 +11,6 @@ namespace InterrogatorMod.Interrogator.Components
         public CharacterBody characterBody;
         private void Awake()
         {
-            Log.Debug("YOU ARE A STINKY LOSER NOW");
             characterBody = this.GetComponent<CharacterBody>();
         }
 

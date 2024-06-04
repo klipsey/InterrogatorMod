@@ -1,9 +1,9 @@
 {
     "name": "Interrogator",
     "author": "tsuyoikenko",
-    "version_number": "1.1.2",
-    "website_url": "https://github.com/klipsey/SpyMod",
-    "description": "Adds the Spy survivor now with alt abilities, emotes, and monsoon skin! Multiplayer compatible.",
+    "version_number": "0.5.0
+    "website_url": "https://github.com/klipsey/InterrogatorMod",
+    "description": "Adds the Interrogator. Hit your friends!",
     "dependencies": [
         "bbepis-BepInExPack-5.4.1905",
         "RiskofThunder-R2API_Core-5.0.3",

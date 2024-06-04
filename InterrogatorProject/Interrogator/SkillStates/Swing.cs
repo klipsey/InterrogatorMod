@@ -92,8 +92,8 @@ namespace InterrogatorMod.Interrogator.SkillStates
             if(hitSelf && !isConvicting)
             {
                 DamageInfo selfDamage = new DamageInfo();
-                selfDamage.attacker = null;
-                selfDamage.inflictor = null;
+                selfDamage.attacker = base.gameObject;
+                selfDamage.inflictor = base.gameObject;
                 selfDamage.damage = this.damageCoefficient * this.damageStat;
                 selfDamage.procCoefficient = 0.5f;
                 selfDamage.crit = RollCrit();

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1907231542
+CRC: 1336313432
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 78a38ac448bc1c006563c08cca5e90a6
+    Hash: e932c4a36171025e13a752f9398854ed
   TypeTreeHash:
     serializedVersion: 2
     Hash: 42d2694ece3e6464c0822cad42100938
@@ -118,6 +118,7 @@ Assets:
 - Assets/Interrogator/Textures/texRampConvicted.png
 - Assets/Interrogator/Textures/texInterrogator.png
 - Assets/Interrogator/Icons/Skill/texConvictIcon.png
+- Assets/Interrogator/Textures/texCloudPixel2.png
 - Assets/Interrogator/VFX/texShockwave.png
 - Assets/Interrogator/Meshes/meshBat.mesh
 - Assets/Interrogator/Projectiles/CoinOrbEffect.prefab
