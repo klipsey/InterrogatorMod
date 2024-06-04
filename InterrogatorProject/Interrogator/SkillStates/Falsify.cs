@@ -152,7 +152,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
                     }
                 }
             }
-            if (stopwatch >= dashDuration / attackSpeedStat && base.isAuthority)
+            if (stopwatch >= dashDuration && base.isAuthority)
             {
                 outer.SetNextStateToMain();
             }

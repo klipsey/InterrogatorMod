@@ -366,7 +366,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION",
                 keywordTokens = new string[] { },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texConvictScepterIcon"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texConvictScepter"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ConvictScepter)),
                 activationStateMachineName = "Interrogate",

@@ -1,3 +1,8 @@
+# 0.5.3
+
+- Fixed attackspeed lowering dash duration
+- Fixed icon for ancient scepter being missing
+
 # 0.5.2
 
 - Increased size of cleaver by 2x
