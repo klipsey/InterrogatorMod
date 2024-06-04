@@ -81,10 +81,9 @@ namespace InterrogatorMod.Interrogator.Components
                 _ = trackingTarget;
                 Ray aimRay = new Ray(inputBank.aimOrigin, inputBank.aimDirection);
                 SearchForTarget(aimRay);
-                if (trackingTarget != null)
+                if (trackingTarget != null && characterBody.skillLocator.special.skillNameToken != InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
                 {
-                    onCooldown = (!trackingTarget.healthComponent.body.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) 
-                        && characterBody.skillLocator.special.skillNameToken != InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME");
+                    onCooldown = !trackingTarget.healthComponent.body.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                 }
                 if (onCooldown)
                 {

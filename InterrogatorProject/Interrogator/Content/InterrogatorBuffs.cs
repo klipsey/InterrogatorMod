@@ -12,12 +12,12 @@ namespace InterrogatorMod.Interrogator.Content
         public static BuffDef interrogatorConvictBuff;
         public static void Init(AssetBundle assetBundle)
         {
-            interrogatorGuiltyBuff = Modules.Content.CreateAndAddBuff("InterrogatorGuiltyDebuff", assetBundle.LoadAsset<Sprite>("texGuiltyDebuff"),
+            interrogatorGuiltyBuff = Modules.Content.CreateAndAddBuff("InterrogatorGuiltyBuff", assetBundle.LoadAsset<Sprite>("texGuiltyBuff"),
                 InterrogatorAssets.interrogatorColor, true, false, false);
 
-            interrogatorGuiltyDebuff = Modules.Content.CreateAndAddBuff("InterrogatorGuiltyBuff", assetBundle.LoadAsset<Sprite>("texGuiltyBuff"),
+            interrogatorGuiltyDebuff = Modules.Content.CreateAndAddBuff("InterrogatorGuiltyDebuff", assetBundle.LoadAsset<Sprite>("texGuiltyDebuff"),
                 InterrogatorAssets.interrogatorColor, false, true, false);
-            
+
             interrogatorPressuredBuff = Modules.Content.CreateAndAddBuff("InterrogatorPressuredDebuff", Addressables.LoadAssetAsync<Sprite>("RoR2/Base/CritOnUse/texBuffFullCritIcon.tif").WaitForCompletion(),
                 InterrogatorAssets.interrogatorColor, false, false, false);
             

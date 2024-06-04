@@ -12,7 +12,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 {
     public class Convict : BaseInterrogatorSkillState
     {
-        public GameObject markedPrefab = InterrogatorAssets.batHitEffectRed;
+        public GameObject markedPrefab = InterrogatorAssets.interrogatorConvictedConsume;
         private float baseDuration = 0.5f;
 
         private float duration;
@@ -28,12 +28,6 @@ namespace InterrogatorMod.Interrogator.SkillStates
         {
             RefreshState();
             base.OnEnter();
-
-            if (base.cameraTargetParams)
-            {
-                aimRequest = base.cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
-            }
-            StartAimMode(duration);
             duration = baseDuration / attackSpeedStat;
             tracker = this.GetComponent<InterrogatorTracker>();
             if(tracker)
@@ -42,9 +36,13 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 if(victim)
                 {
                     victimBody = victim.healthComponent.body;
-                    if(victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff) && !victimBody.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
+                    if((victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) || characterBody.skillLocator.special.skillNameToken == InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME") && !victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
                     {
-                        Util.PlaySound("sfx_interrogator_point", this.gameObject);
+                        if (base.cameraTargetParams)
+                        {
+                            aimRequest = base.cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                        }
+                        StartAimMode(duration);
                         PlayAnimation("Gesture, Override", "Point", "Swing.playbackRate", duration * 1.5f);
                         EffectManager.SpawnEffect(markedPrefab, new EffectData
                         {
@@ -54,9 +52,11 @@ namespace InterrogatorMod.Interrogator.SkillStates
                         
                         if(NetworkServer.active)
                         {
-                            victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorPressuredBuff, this.interrogatorController.convictDurationMax);
-                            characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorPressuredBuff, this.interrogatorController.convictDurationMax);
+                            victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
+                            characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
                         }
+                        this.interrogatorController.convictedVictimBody = victimBody;
+                        this.interrogatorController.EnableSword();
                     }
                 }
             }

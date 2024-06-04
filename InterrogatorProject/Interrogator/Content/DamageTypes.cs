@@ -57,7 +57,7 @@ namespace InterrogatorMod.Interrogator.Content
                     if (victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !victimBody.gameObject.GetComponent<StinkyLoserController>())
                     {
                         StinkyLoserController stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
-                        stink.interrogatorController = iController;
+                        stink.attackerBody = attackerBody;
                         attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
                     }
 

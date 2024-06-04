@@ -25,7 +25,7 @@ namespace InterrogatorMod.Interrogator.Content
             string prefix = InterrogatorSurvivor.INTERROGATOR_PREFIX;
 
             string desc = "Interrogator relishes the pain of others. Don't have too much fun hurting your allies, or do...<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Punish the Guilty after they hit you to gain attackspeed and movespeed. No running from justice." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Punish the Guilty after they hit you to gain attack speed and move speed. No running from justice." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > If you need a quick and dirty Guilty buff, swing and hit yourself instead. The law applies to everyone!" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Falsify is a great way to spot the Guilty before they commit crimes. Unethical? What do you mean?" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Convict a Guilty target to make sure they are punished for their acts. Guilty until proven innocent after all." + Environment.NewLine + Environment.NewLine;
@@ -47,7 +47,7 @@ namespace InterrogatorMod.Interrogator.Content
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Torment");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", $"<color=#FFBF66>Interrogator</color> can be hit by anybody but he can also hit anybody. " +
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", $"<color=#FFBF66>Interrogator</color> can hit and be hit by both allies and enemies. " +
                 $"Attackers that have hit <color=#FFBF66>Interrogator</color> are permanently marked as <color=#FFBF66>Guilty</color>. Hitting <color=#FFBF66>Guilty</color> targets grants <style=cIsDamage>attack speed</style> and <style=cIsDamage>damage</style> until they die (Once per target).");
             #endregion
 
@@ -60,7 +60,7 @@ namespace InterrogatorMod.Interrogator.Content
             #region Secondary
             Language.Add(prefix + "SECONDARY_AFFRAY_NAME", "Affray");
             Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $" Throw a cleaver that deals <style=cIsDamage>{InterrogatorStaticValues.cleaverDamageCoefficient * 100f}% </style>. " +
-                $"If <color=#FFBF66>Affray</style> kills its target, apply <style=cIsDamage>Hemmorhage</style> and <color=#FFBF66>Pressure</style> to everyone in the area.");
+                $"If <color=#FFBF66>Affray</color> kills its target, apply <style=cIsDamage>Hemmorhage</style> and <color=#FFBF66>Pressure</color> to everyone in the area.");
             #endregion
 
             #region Utility 
@@ -71,8 +71,8 @@ namespace InterrogatorMod.Interrogator.Content
 
             #region Special
             Language.Add(prefix + "SPECIAL_CONVICT_NAME", "Convict");
-            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add <color=#FFBF66>Guilty's</color> buff to you. " +
-                $"During this time all external <style=cIsDamage>damage</style> is negated but all your <style=cIsDamage>damage</style> dealt to others is<style=cIsUtility>negated</style>.");
+            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and fight them for 10 seconds. Your primary can no longer hit you but can continuously stack <color=#FFBF66>Guilty's</color> buff. " +
+                $"During <color=#FFBF66>Convict</color> all external <style=cIsDamage>damage</style> is negated including your own.");
 
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_NAME", "Punish");
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add <color=#FFBF66>Guilty's</color> buff to you. " +

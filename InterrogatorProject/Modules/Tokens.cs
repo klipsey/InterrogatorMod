@@ -10,7 +10,7 @@ namespace InterrogatorMod.Modules
 
         public static string agileKeyword = KeywordText("Agile", "The skill can be used while sprinting.");
 
-        public static string interrogatorPressuredKeyword = KeywordText("Pressured", "Boost attackspeed and movespeed but lowers armor and damage (decreased ally negative stats).");
+        public static string interrogatorPressuredKeyword = KeywordText("Pressured", "Boost attack speed and move speed but lowers armor and damage (decreased ally negative stats).");
 
         public static string interrogatorGuiltyKeyword = KeywordText("Ally Damage", "Allies take and deal less damage each other and Guilty expires from them after 10 seconds.");
         public static string DamageText(string text)

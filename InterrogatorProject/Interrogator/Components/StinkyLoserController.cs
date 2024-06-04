@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using RoR2;
 using InterrogatorMod.Interrogator.Content;
+using UnityEngine.Networking;
 
 namespace InterrogatorMod.Interrogator.Components
 {
     public class StinkyLoserController : MonoBehaviour
     {
-        public InterrogatorController interrogatorController;
+        public CharacterBody attackerBody;
         public CharacterBody characterBody;
         private void Awake()
         {
@@ -31,9 +32,9 @@ namespace InterrogatorMod.Interrogator.Components
 
         private void OnDestroy()
         {
-            if (interrogatorController) 
+            if (NetworkServer.active) 
             {
-                interrogatorController.RemoveBuff();
+                attackerBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
             }
         }
     }

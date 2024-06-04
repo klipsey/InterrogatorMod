@@ -39,7 +39,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingMuzzle1" : "SwingMuzzle2";
             playbackRateParam = "Swing.playbackRate";
-            swingEffectPrefab = InterrogatorAssets.batSwingEffect;
+            swingEffectPrefab = this.isConvicting ? InterrogatorAssets.swordSwingEffect : InterrogatorAssets.batSwingEffect;
             if (this.isConvicting)
             {
                 moddedDamageTypeHolder.Add(DamageTypes.InterrogatorConvict);
@@ -92,9 +92,9 @@ namespace InterrogatorMod.Interrogator.SkillStates
             if(hitSelf && !isConvicting)
             {
                 DamageInfo selfDamage = new DamageInfo();
-                selfDamage.attacker = base.gameObject;
+                selfDamage.attacker = null;
                 selfDamage.inflictor = null;
-                selfDamage.damage = this.damageCoefficient * this.damageStat * 0.2f;
+                selfDamage.damage = this.damageCoefficient * this.damageStat;
                 selfDamage.procCoefficient = 0.5f;
                 selfDamage.crit = RollCrit();
                 selfDamage.damageType = DamageType.NonLethal;
@@ -105,10 +105,9 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 selfDamage.dotIndex = DotController.DotIndex.None;
                 selfDamage.position = base.transform.position;
 
-
                 this.healthComponent.TakeDamage(selfDamage);
 
-                Util.PlaySound("sfx_interrogator_self_damage", base.gameObject);
+                Util.PlaySound("sfx_scout_baseball_impact", base.gameObject);
             }
             base.OnExit();
         }

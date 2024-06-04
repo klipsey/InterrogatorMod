@@ -257,7 +257,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_DESCRIPTION",
                 keywordTokens = new string[] { Tokens.interrogatorPressuredKeyword },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texButcherKnifeIcon"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texInterrogatorCleaverIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(ThrowCleaver)),
 
@@ -293,7 +293,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_DESCRIPTION",
                 keywordTokens = new string[] { },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSpyFlip"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texFalsifyIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(Falsify)),
                 activationStateMachineName = "Weapon2",
@@ -330,7 +330,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_CONVICT_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SPECIAL_CONVICT_DESCRIPTION",
                 keywordTokens = new string[] { },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSpyCloak"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texConvictIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Convict)),
                 activationStateMachineName = "Interrogate",
@@ -341,7 +341,7 @@ namespace InterrogatorMod.Interrogator
 
                 rechargeStock = 1,
                 requiredStock = 1,
-                stockToConsume = 0,
+                stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
@@ -366,7 +366,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION",
                 keywordTokens = new string[] { },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSpyCloak"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texConvictScepterIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ConvictScepter)),
                 activationStateMachineName = "Interrogate",
@@ -570,10 +570,12 @@ namespace InterrogatorMod.Interrogator
             {
                 CharacterBody victimBody = self.body;
                 CharacterBody attackerBody = null;
+
                 if (damageInfo.attacker)
                 {
                     attackerBody = damageInfo.attacker.GetComponent<CharacterBody>();
                 }
+
                 if (damageInfo.damage > 0 && !damageInfo.rejected && victimBody && attackerBody)
                 {
                     if(victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)
@@ -586,20 +588,23 @@ namespace InterrogatorMod.Interrogator
                         }
                         else damageInfo.rejected = true;
                     }
+
                     if (victimBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
                     {
                         InterrogatorController iController = victimBody.GetComponent<InterrogatorController>();
                         if (iController)
                         {
-                            if (attackerBody && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
+                            if (attackerBody)
                             {
                                 if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                                 {
-                                    damageInfo.damage *= 0.1f;
+                                    damageInfo.damage *= 0.25f;
+                                    if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, InterrogatorStaticValues.baseConvictTimerMax);
                                 }
                                 else
                                 {
+                                    if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                 }
                             }
@@ -612,7 +617,7 @@ namespace InterrogatorMod.Interrogator
                         {
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                             {
-                                damageInfo.damage *= 0.1f;
+                                damageInfo.damage *= 0.25f;
                             }
                         }
                     }

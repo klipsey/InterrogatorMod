@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using UnityEngine;
 using InterrogatorMod.Interrogator.Content;
 using R2API;
+using EntityStates;
 
 namespace InterrogatorMod.Interrogator.SkillStates
 {
@@ -18,13 +19,15 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public static float smallHopVelocity = 12f;
 
-        public static float dashDuration = 0.3f;
+        public static float dashDelay = 0.2f;
 
-        public static float speedCoefficient = 10f;
+        public static float dashDuration = 0.5f;
 
-        public static string beginSoundString = "sfx_interrogator_dash";
+        public static float speedCoefficient = 5f;
 
-        public static string endSoundString = "";
+        public static string beginSoundString = "sfx_driver_dodge";
+
+        public static string endSoundString = "sfx_interrogator_dash";
 
         public static float damageCoefficient = InterrogatorStaticValues.falsifyDamageCoefficient;
 
@@ -78,11 +81,13 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 hurtboxGroup = modelTransform.GetComponent<HurtBoxGroup>();
             }
             SmallHop(base.characterMotor, smallHopVelocity);
-            PlayAnimation("FullBody, Override", "Dash", "Dash.playbackRate", dashDuration);
+            PlayAnimation("FullBody, Override", "Dash", "Dash.playbackRate", (dashDuration + dashDelay) * 1.5f);
             dashVector = base.inputBank.aimDirection;
             overlapAttack = InitMeleeOverlap(damageCoefficient, hitEffectPrefab, modelTransform, "MeleeHitbox");
             overlapAttack.damageType = DamageType.Stun1s;
             overlapAttack.AddModdedDamageType(DamageTypes.InterrogatorGuilty);
+            overlapAttack.teamIndex = TeamIndex.None;
+            overlapAttack.impactSound = InterrogatorAssets.batImpactSoundEvent.index;
             if (this.isConvicting) overlapAttack.AddModdedDamageType(DamageTypes.InterrogatorConvict);
             if (NetworkServer.active)
             {
@@ -95,7 +100,12 @@ namespace InterrogatorMod.Interrogator.SkillStates
             Transform transform = childLocator.FindChild("Chest");
             if (transform && dashPrefab)
             {
-                UnityEngine.Object.Instantiate(dashPrefab, transform.position, Util.QuaternionSafeLookRotation(dashVector), transform);
+                EffectManager.SpawnEffect(dashPrefab, new EffectData
+                {
+                    origin = transform.position,
+                    rotation = Util.QuaternionSafeLookRotation(-dashVector)
+
+                }, true);
             }
         }
 
@@ -103,11 +113,11 @@ namespace InterrogatorMod.Interrogator.SkillStates
         {
             base.FixedUpdate();
             base.characterDirection.forward = dashVector;
-            if (!isDashing)
+            if (base.fixedAge >= dashDelay && !isDashing)
             {
+                CreateDashEffect();
                 isDashing = true;
                 dashVector = base.inputBank.aimDirection;
-                CreateDashEffect();
                 base.gameObject.layer = LayerIndex.fakeActor.intVal;
                 base.characterMotor.Motor.RebuildCollidableLayers();
             }
@@ -166,6 +176,11 @@ namespace InterrogatorMod.Interrogator.SkillStates
             base.OnExit();
         }
 
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+
+            return InterruptPriority.PrioritySkill;
+        }
         public override void OnSerialize(NetworkWriter writer)
         {
             base.OnSerialize(writer);

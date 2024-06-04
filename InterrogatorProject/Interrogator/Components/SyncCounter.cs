@@ -39,7 +39,6 @@ namespace InterrogatorMod.Interrogator.Components
             int i = increase ? 1 : -1;
             if(iController)
             {
-                iController.ChangeCounter(i);
             }
         }
 

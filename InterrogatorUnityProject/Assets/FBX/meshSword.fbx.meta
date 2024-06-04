@@ -72,6 +72,27 @@ ModelImporter:
   - first:
       74: 3801639673374246413
     second: Armature|SprintFast
+  - first:
+      74: 8127552430955989566
+    second: Armature|meshBatAction
+  - first:
+      74: -3245520201051287128
+    second: Armature|meshCleaverAction
+  - first:
+      74: 43685626647594754
+    second: Armature|meshExtraAction
+  - first:
+      74: -6505177192935469414
+    second: Armature|meshInterrogatorAction
+  - first:
+      74: 4458402739685673218
+    second: Armature|meshJacketAction
+  - first:
+      74: -7862412364536252609
+    second: Armature|meshVisorAction
+  - first:
+      74: 8039437375205953329
+    second: Armature|SunAction
   externalObjects:
   - first:
       type: UnityEngine:Material

@@ -19,7 +19,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
         public override void OnEnter()
         {
             interrogatorController = base.gameObject.GetComponent<InterrogatorController>();
-            base.attackSoundString = "sfx_scout_cleaver_throw";
+            base.attackSoundString = "sfx_scout_baseball_hit";
 
             base.baseDuration = baseDuration;
             base.baseDelayBeforeFiringProjectile = baseDelayDuration;
@@ -41,8 +41,10 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 aimRay.direction = Util.ApplySpread(aimRay.direction, 0f, 0f, 1f, 1f, 0f, this.projectilePitchBonus);
                 DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaver.GetComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
                 moddedDamage.Add(DamageTypes.InterrogatorPressure);
+                if(base.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)) moddedDamage.Add(DamageTypes.InterrogatorConvict);
                 ProjectileManager.instance.FireProjectile(cleaver, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * InterrogatorStaticValues.cleaverDamageCoefficient, this.force, this.RollCrit(), DamageColorIndex.Default, null, -1f);
                 if (moddedDamage.Has(DamageTypes.InterrogatorPressure)) moddedDamage.Remove(DamageTypes.InterrogatorPressure);
+                if (moddedDamage.Has(DamageTypes.InterrogatorConvict)) moddedDamage.Remove(DamageTypes.InterrogatorConvict);
             }
         }
 

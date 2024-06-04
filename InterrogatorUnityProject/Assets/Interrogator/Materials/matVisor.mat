@@ -126,7 +126,7 @@ Material:
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
-    - _EmPower: 2
+    - _EmPower: 1.25
     - _EnableCutout: 0
     - _FEON: 0
     - _Fade: 1
@@ -163,7 +163,7 @@ Material:
     - _SliceAlphaDepth: 0.1
     - _SliceBandHeight: 1
     - _SliceHeight: 5
-    - _Smoothness: 0
+    - _Smoothness: 0.2
     - _SmoothnessTextureChannel: 0
     - _SpecularExponent: 1
     - _SpecularHighlights: 1

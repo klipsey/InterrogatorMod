@@ -19,8 +19,11 @@ namespace InterrogatorMod.Interrogator.Components
         private CharacterModel characterModel;
         private Animator animator;
         private SkillLocator skillLocator;
-        public string currentSkinNameToken => this.skinController.skins[this.skinController.currentSkinIndex].nameToken;
+        private Material[] swordMat;
+        private Material[] batMat;
 
+        public CharacterBody convictedVictimBody;
+        public string currentSkinNameToken => this.skinController.skins[this.skinController.currentSkinIndex].nameToken;
         public string altSkinNameToken => InterrogatorSurvivor.INTERROGATOR_PREFIX + "MASTERY_SKIN_NAME";
 
         private bool hasPlayed = false;
@@ -35,9 +38,6 @@ namespace InterrogatorMod.Interrogator.Components
         private uint playID1;
 
         private ParticleSystem swordEffect;
-
-        public Action onConvictDurationChange;
-
         private void Awake()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
@@ -67,6 +67,10 @@ namespace InterrogatorMod.Interrogator.Components
             if (this.skinController)
             {
                 this.swordEffect = this.childLocator.FindChild("SpecialEffectHand").gameObject.GetComponent<ParticleSystem>();
+                this.swordMat = new Material[1];
+                this.batMat = new Material[1];
+                this.swordMat[0] = InterrogatorAssets.swordMat;
+                this.batMat[0] = InterrogatorAssets.batMat;
             }
         }
         private bool FriendlyFireManager_ShouldSeekingProceed(On.RoR2.FriendlyFireManager.orig_ShouldSeekingProceed orig, HealthComponent victim, TeamIndex attackerTeamIndex)
@@ -106,22 +110,12 @@ namespace InterrogatorMod.Interrogator.Components
         #endregion
         private void FixedUpdate()
         {
-            if(this.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
+            if ((!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || !convictedVictimBody.healthComponent.alive) && guiltyCounter > 0 && !hasPlayed)
             {
-                EnableSword();
-                onConvictDurationChange.Invoke();
-            }
-            else if (!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && guiltyCounter > 0 && !hasPlayed)
-            {
+                Log.Debug(convictedVictimBody.healthComponent.alive);
+                Log.Debug(convictedVictimBody.baseNameToken);
                 hasPlayed = true;
                 DisableSword();
-                if (NetworkServer.active)
-                {
-                    for (int i = 0; i < this.guiltyCounter; i++)
-                    {
-                        this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                    }
-                }
             }
 
             if(skillLocator.secondary.CanExecute() && !childLocator.FindChild("CleaverModel").gameObject.activeSelf)
@@ -133,38 +127,31 @@ namespace InterrogatorMod.Interrogator.Components
                 childLocator.FindChild("CleaverModel").gameObject.SetActive(false);
             }
         }
-        public void ChangeCounter(int i)
-        {
-            guiltyCounter += i;
-        }
 
         public void AddToCounter()
         {
-            NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
-            if (!identity) return;
-
-            new SyncCounter(identity.netId, this.gameObject, true).Send(NetworkDestination.Clients);
-        }
-
-        public void RemoveFromCounter()
-        {
-            NetworkIdentity identity = this.gameObject.GetComponent<NetworkIdentity>();
-            if (!identity) return;
-
-            new SyncCounter(identity.netId, this.gameObject, false).Send(NetworkDestination.Clients);
-        }
-
-        public void RemoveBuff()
-        {
-            if (NetworkServer.active) this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+            guiltyCounter++;
         }
         public void EnableSword()
         {
-            if (!this.swordEffect.isPlaying) swordEffect.Play();
+            this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.swordMesh;
+            hasPlayed = false;
         }
         public void DisableSword() 
         {
-            if(this.swordEffect.isPlaying) swordEffect.Stop();
+            this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.batMesh;
+
+            if (NetworkServer.active)
+            {
+                if (characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)) characterBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorConvictBuff);
+                for (int i = this.guiltyCounter; i > 0; i--)
+                {
+                    this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
+                }
+            }
+
+            guiltyCounter = 0;
+            convictedVictimBody = null;
         }
         private void OnDestroy()
         {

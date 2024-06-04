@@ -71,9 +71,9 @@ namespace InterrogatorMod.Modules.BaseStates
             }
             moddedDamageTypeHolder.Clear();
             attack.damageColorIndex = DamageColorIndex.Default;
-            attack.attacker = gameObject;
-            attack.inflictor = gameObject;
-            attack.teamIndex = GetTeam();
+            attack.attacker = this.gameObject;
+            attack.inflictor = this.gameObject;
+            attack.teamIndex = TeamIndex.None;
             attack.damage = damageCoefficient * damageStat;
             attack.procCoefficient = procCoefficient;
             attack.hitEffectPrefab = hitEffectPrefab;

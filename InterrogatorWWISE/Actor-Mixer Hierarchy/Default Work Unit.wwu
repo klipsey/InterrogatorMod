@@ -3439,12 +3439,7 @@
 									<PropertyList>
 										<Property Name="Pitch" Type="int32">
 											<ValueList>
-												<Value>-300</Value>
-											</ValueList>
-										</Property>
-										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>-5</Value>
+												<Value>-430</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -3458,6 +3453,11 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="sfx_driver_dodge" ID="{2FE01915-2675-42F8-A20C-9D3D050C8CC9}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.483974660118158"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="0.643598832657129"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>sfx_driver_dodge.wav</AudioFile>
 											<MediaIDList>
@@ -5141,6 +5141,13 @@
 									</ActiveSourceList>
 								</Sound>
 								<RandomSequenceContainer Name="sfx_scout_baseball_hit" ID="{A7A675EC-EA97-4CC9-9CD9-33613B20CCA2}" ShortID="745364751">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-450</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
@@ -6347,6 +6354,10 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="sfx_interrogator_dash" ID="{0D488138-4303-4155-A5B7-D34A32A0E6DF}">
+											<PropertyList>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="0.205751705764518"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>sfx_interrogator_dash.wav</AudioFile>
 											<MediaIDList>
@@ -6359,6 +6370,13 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="sfx_interrogator_self_damage" ID="{5A0FAC63-7DE0-4B8C-A21E-E553BB565AC7}" ShortID="636991303">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>6</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
