@@ -76,7 +76,7 @@ namespace InterrogatorMod.Interrogator.Content
 
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_NAME", "Punish");
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and force them to fight you for 10 seconds. Your primary can no longer hit you but will continuously add <color=#FFBF66>Guilty's</color> buff to you. " +
-                $"During this time all external <style=cIsDamage>damage</style> is negated but all your <style=cIsDamage>damage</style> dealt to others is <style=cIsUtility>negated</style>." + Tokens.ScepterDescription("Target enemies without guilty and damage you deal is no longer negated but is reduced by 75%."));
+                $"During this time all external <style=cIsDamage>damage</style> is negated but all your <style=cIsDamage>damage</style> dealt to others is <style=cIsUtility>negated</style>." + Tokens.ScepterDescription("Convict can target enemies without Guilty and damage you deal is no longer negated but is reduced by 75%."));
             #endregion
 
             #region Achievements
