@@ -25,7 +25,7 @@
 
 ## Secondary: **Affray**
 
-- Throw a cleaver that deals damage. If Affray kills its target, apply Hemmorhage and Pressure to everyone in the area.
+- Launch a cleaver that deals damage. If Affray kills its target, apply Hemmorhage and Pressure to everyone in the area.
 
 [![tex-Interrogator-Cleaver-Icon.png](https://i.postimg.cc/VsZRQbM4/tex-Interrogator-Cleaver-Icon.png)](https://postimg.cc/0rmm7jVJ)
 

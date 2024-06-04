@@ -59,7 +59,7 @@ namespace InterrogatorMod.Interrogator.Content
 
             #region Secondary
             Language.Add(prefix + "SECONDARY_AFFRAY_NAME", "Affray");
-            Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $"<style=cIsDamage>Slayer.</style> Throw a cleaver that deals <style=cIsDamage>{InterrogatorStaticValues.cleaverDamageCoefficient * 100f}% damage</style>. " +
+            Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $"<style=cIsDamage>Slayer.</style> Launch a cleaver that deals <style=cIsDamage>{InterrogatorStaticValues.cleaverDamageCoefficient * 100f}% damage</style>. " +
                 $"If <color=#FFBF66>Affray</color> kills its target, apply <style=cIsDamage>Hemmorhage</style> and <color=#FFBF66>Pressure</color> to everyone in the area.");
             #endregion
 
