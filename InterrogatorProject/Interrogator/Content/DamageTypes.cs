@@ -54,17 +54,14 @@ namespace InterrogatorMod.Interrogator.Content
             {
                 if (iController && attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
                 {
-                    if (victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !victimBody.gameObject.GetComponent<StinkyLoserController>())
-                    {
-                        StinkyLoserController stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
-                        stink.attackerBody = attackerBody;
-                        attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                    }
-
                     if (damageInfo.HasModdedDamageType(InterrogatorGuilty))
                     {
-                        if (victimBody && !victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
+                        StinkyLoserController stink = victimBody.gameObject.GetComponent<StinkyLoserController>();
+                        if (victimBody && !victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !stink)
                         {
+                            stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
+                            stink.attackerBody = attackerBody;
+                            attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                             {
                                 victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
@@ -76,12 +73,15 @@ namespace InterrogatorMod.Interrogator.Content
                         }
                     }
 
-                    if (damageInfo.HasModdedDamageType(InterrogatorConvict))
+                    if (damageInfo.HasModdedDamageType(InterrogatorConvict) && victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
                     {
                         if (victimBody && victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
                         {
                             attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                            iController.AddToCounter();
+                            if(victimBody.gameObject.TryGetComponent<ConvictedController>(out ConvictedController i))
+                            {
+                                i.additionalGuiltyTracker++;
+                            }
                         }
                     }
 

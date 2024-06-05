@@ -7,6 +7,7 @@ using InterrogatorMod.Interrogator.Content;
 using UnityEngine.Networking;
 using InterrogatorMod.Interrogator.Components;
 using static RoR2.OverlapAttack;
+using System;
 
 namespace InterrogatorMod.Interrogator.SkillStates
 {
@@ -49,13 +50,16 @@ namespace InterrogatorMod.Interrogator.SkillStates
                             origin = victimBody.corePosition,
                             scale = 1.5f
                         }, transmit: true);
-                        
-                        if(NetworkServer.active)
+
+                        this.interrogatorController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (this.characterBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
+
+                        if (NetworkServer.active)
                         {
                             victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
                             characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
                         }
-                        this.interrogatorController.convictedVictimBody = victimBody;
+                        this.victimBody.gameObject.AddComponent<ConvictedController>();
+                        this.victimBody.gameObject.GetComponent<ConvictedController>().attackerBody = base.characterBody;
                         this.interrogatorController.EnableSword();
                     }
                 }

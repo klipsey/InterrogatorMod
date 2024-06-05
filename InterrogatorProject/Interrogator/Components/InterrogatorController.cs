@@ -21,8 +21,6 @@ namespace InterrogatorMod.Interrogator.Components
         private SkillLocator skillLocator;
         private Material[] swordMat;
         private Material[] batMat;
-
-        public CharacterBody convictedVictimBody;
         public string currentSkinNameToken => this.skinController.skins[this.skinController.currentSkinIndex].nameToken;
         public string altSkinNameToken => InterrogatorSurvivor.INTERROGATOR_PREFIX + "MASTERY_SKIN_NAME";
 
@@ -31,13 +29,9 @@ namespace InterrogatorMod.Interrogator.Components
         private bool stopwatchOut = false;
         public bool pauseTimer = false;
 
-        public float convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax;
-
-        private int guiltyCounter = 0;
+        public float convictDurationMax;
 
         private uint playID1;
-
-        private ParticleSystem swordEffect;
         private void Awake()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
@@ -61,12 +55,12 @@ namespace InterrogatorMod.Interrogator.Components
             On.RoR2.FriendlyFireManager.ShouldSplashHitProceed += FriendlyFireManager_ShouldSplashHitProceed;
             On.RoR2.FriendlyFireManager.ShouldDirectHitProceed += FriendlyFireManager_ShouldDirectHitProceed;
             On.RoR2.FriendlyFireManager.ShouldSeekingProceed += FriendlyFireManager_ShouldSeekingProceed;
+
         }
         public void ApplySkin()
         {
             if (this.skinController)
             {
-                this.swordEffect = this.childLocator.FindChild("SpecialEffectHand").gameObject.GetComponent<ParticleSystem>();
                 this.swordMat = new Material[1];
                 this.batMat = new Material[1];
                 this.swordMat[0] = InterrogatorAssets.swordMat;
@@ -99,18 +93,11 @@ namespace InterrogatorMod.Interrogator.Components
             }
             else return orig.Invoke(victim, attackerTeamIndex);
         }
-        private void Inventory_onItemAddedClient(ItemIndex itemIndex)
-        {
-            if (itemIndex == DLC1Content.Items.EquipmentMagazineVoid.itemIndex)
-            {
-                this.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + this.characterBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
-            }
-        }
 
         #endregion
         private void FixedUpdate()
         {
-            if ((!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || !convictedVictimBody.healthComponent.alive) && guiltyCounter > 0 && !hasPlayed)
+            if (!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && !hasPlayed)
             {
                 hasPlayed = true;
                 DisableSword();
@@ -126,10 +113,6 @@ namespace InterrogatorMod.Interrogator.Components
             }
         }
 
-        public void AddToCounter()
-        {
-            guiltyCounter++;
-        }
         public void EnableSword()
         {
             this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.swordMesh;
@@ -138,27 +121,10 @@ namespace InterrogatorMod.Interrogator.Components
         public void DisableSword() 
         {
             this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.batMesh;
-
-            if (NetworkServer.active)
-            {
-                if (characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)) characterBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorConvictBuff);
-                for (int i = this.guiltyCounter; i > 0; i--)
-                {
-                    this.characterBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                }
-            }
-
-            guiltyCounter = 0;
-            convictedVictimBody = null;
         }
         private void OnDestroy()
         {
             AkSoundEngine.StopPlayingID(this.playID1);
-
-            if (this.characterBody && this.characterBody.master && this.characterBody.master.inventory)
-            {
-                this.characterBody.master.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
-            }
 
             On.RoR2.FriendlyFireManager.ShouldSplashHitProceed -= FriendlyFireManager_ShouldSplashHitProceed;
             On.RoR2.FriendlyFireManager.ShouldDirectHitProceed -= FriendlyFireManager_ShouldDirectHitProceed;

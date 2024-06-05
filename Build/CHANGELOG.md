@@ -1,3 +1,11 @@
+# 0.5.4
+
+- Changed Guilty to grant buff immediately upon Interrogator taking damage
+- Fixed Ancient Scepter not activating on all enemies if you were not targetting a guilty enemy when aquiring it
+- Convict now properly supports activating on multiple enemies at once with individual durations for each conviction target
+- Fixed sword not going away after Conviction
+- Fixed Lysate Cell not giving duration for Conviction 0.5 per lysate
+
 # 0.5.3
 
 - Fixed attackspeed lowering dash duration

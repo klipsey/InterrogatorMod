@@ -592,21 +592,27 @@ namespace InterrogatorMod.Interrogator
                     if (victimBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
                     {
                         InterrogatorController iController = victimBody.GetComponent<InterrogatorController>();
-                        if (iController)
+                        StinkyLoserController stink = attackerBody.gameObject.GetComponent<StinkyLoserController>();
+                        if (iController && !stink)
                         {
-                            if (attackerBody)
+                            if (attackerBody && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
                             {
                                 if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                                 {
                                     damageInfo.damage *= 0.25f;
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
-                                    attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, InterrogatorStaticValues.baseConvictTimerMax);
+                                    attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
+                                    stink = attackerBody.gameObject.AddComponent<StinkyLoserController>();
+                                    stink.attackerBody = victimBody;
                                 }
                                 else
                                 {
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
+                                    stink = attackerBody.gameObject.AddComponent<StinkyLoserController>();
+                                    stink.attackerBody = victimBody;
                                 }
+                                victimBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
                             }
                         }
                     }

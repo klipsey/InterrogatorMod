@@ -48,7 +48,7 @@ namespace InterrogatorMod.Interrogator.Content
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Torment");
             Language.Add(prefix + "PASSIVE_DESCRIPTION", $"<color=#FFBF66>Interrogator</color> can hit and be hit by both allies and enemies. " +
-                $"Attackers that have hit <color=#FFBF66>Interrogator</color> are permanently marked as <color=#FFBF66>Guilty</color>. Hitting <color=#FFBF66>Guilty</color> targets grants <style=cIsDamage>attack speed</style> and <style=cIsDamage>damage</style> until they die (Once per target).");
+                $"Attackers that have hit <color=#FFBF66>Interrogator</color> are permanently marked as <color=#FFBF66>Guilty</color> granting <style=cIsDamage>attack speed</style> and <style=cIsDamage>damage</style> to Interrogator until they die (Once per target).");
             #endregion
 
             #region Primary

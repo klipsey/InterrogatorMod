@@ -22,7 +22,7 @@ namespace InterrogatorMod.Interrogator.Content
                 InterrogatorAssets.interrogatorColor, false, false, false);
             
             interrogatorConvictBuff = Modules.Content.CreateAndAddBuff("InterrogatorConvictBuff", assetBundle.LoadAsset<Sprite>("texConvictBuff"), 
-                InterrogatorAssets.interrogatorColor, false, false, false);
+                InterrogatorAssets.interrogatorColor, true, false, false);
         }
     }
 }
