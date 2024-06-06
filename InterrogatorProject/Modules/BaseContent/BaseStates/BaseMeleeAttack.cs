@@ -133,7 +133,7 @@ namespace InterrogatorMod.Modules.BaseStates
 
         protected virtual void FireAttack()
         {
-            if (isAuthority)
+            if (base.isAuthority)
             {
                 if (attack.Fire())
                 {
@@ -149,7 +149,7 @@ namespace InterrogatorMod.Modules.BaseStates
 
             PlaySwingEffect();
 
-            if (isAuthority)
+            if (base.isAuthority)
             {
                 AddRecoil(-1f * attackRecoil, -2f * attackRecoil, -0.5f * attackRecoil, 0.5f * attackRecoil);
             }

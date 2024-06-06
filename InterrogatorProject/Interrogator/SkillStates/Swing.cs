@@ -5,6 +5,10 @@ using RoR2;
 using UnityEngine.AddressableAssets;
 using InterrogatorMod.Interrogator.Content;
 using static R2API.DamageAPI;
+using UnityEngine.Networking;
+using R2API.Networking;
+using InterrogatorMod.Interrogator.Components;
+using R2API.Networking.Interfaces;
 
 namespace InterrogatorMod.Interrogator.SkillStates
 {
@@ -54,6 +58,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
         protected override void OnHitEnemyAuthority()
         {
             base.OnHitEnemyAuthority();
+
             hitSelf = false;
         }
 
@@ -64,9 +69,14 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 Vector3 direction = this.GetAimRay().direction;
                 direction.y = Mathf.Max(direction.y, direction.y * 0.5f);
                 this.FindModelChild("MeleePivot").rotation = Util.QuaternionSafeLookRotation(direction);
+                base.FireAttack();
+
+                NetworkIdentity identity = base.gameObject.GetComponent<NetworkIdentity>();
+                if (!identity) return;
+
+                new SyncSelfDamage(identity.netId, hitSelf).Send(NetworkDestination.Server);
             }
 
-            base.FireAttack();
         }
 
         protected override void PlaySwingEffect()
@@ -89,7 +99,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public override void OnExit()
         {
-            if(hitSelf && !isConvicting)
+            if(this.interrogatorController.hitSelf && !isConvicting)
             {
                 DamageInfo selfDamage = new DamageInfo();
                 selfDamage.attacker = base.gameObject;
@@ -110,6 +120,18 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 Util.PlaySound("sfx_scout_baseball_impact", base.gameObject);
             }
             base.OnExit();
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            writer.Write(hitSelf);
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            hitSelf = reader.ReadBoolean();
         }
     }
 }

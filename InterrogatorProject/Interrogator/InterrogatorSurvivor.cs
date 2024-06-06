@@ -47,7 +47,7 @@ namespace InterrogatorMod.Interrogator
 
             characterPortrait = assetBundle.LoadAsset<Texture>("texInterrogatorIcon"),
             bodyColor = InterrogatorAssets.interrogatorColor,
-            sortPosition = 5.99f,
+            sortPosition = 6f,
 
             crosshair = Modules.Assets.LoadCrosshair("Standard"),
             podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
@@ -90,6 +90,11 @@ namespace InterrogatorMod.Interrogator
                 new CustomRendererInfo
                 {
                     childName = "VisorModel",
+                    dontHotpoo = true,
+                },
+                new CustomRendererInfo
+                {
+                    childName = "ExtraModel",
                     dontHotpoo = true,
                 },
         };
@@ -421,7 +426,8 @@ namespace InterrogatorMod.Interrogator
                 "meshBat",
                 "meshCleaver",
                 "meshJacket",
-                "meshVisor");
+                "meshVisor",
+                "meshExtra");
 
             //add new skindef to our list of skindefs. this is what we'll be passing to the SkinController
             /*

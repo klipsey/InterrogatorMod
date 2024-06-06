@@ -1,3 +1,11 @@
+# 0.5.6 
+
+- Fixed self damage always applying for clients
+
+# 0.5.5
+
+- Fixed parts of mesh floating when it should be invisible (Might break skins sorry, new mdl entry is ExtraModel/meshExtra)
+
 # 0.5.4
 
 - Changed Guilty to grant buff immediately upon Interrogator taking damage

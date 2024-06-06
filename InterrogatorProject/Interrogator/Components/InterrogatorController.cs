@@ -28,6 +28,7 @@ namespace InterrogatorMod.Interrogator.Components
         public bool isConvicted => this.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff);
         private bool stopwatchOut = false;
         public bool pauseTimer = false;
+        public bool hitSelf { get; private set; }
 
         public float convictDurationMax;
 
@@ -56,6 +57,10 @@ namespace InterrogatorMod.Interrogator.Components
             On.RoR2.FriendlyFireManager.ShouldDirectHitProceed += FriendlyFireManager_ShouldDirectHitProceed;
             On.RoR2.FriendlyFireManager.ShouldSeekingProceed += FriendlyFireManager_ShouldSeekingProceed;
 
+        }
+        public void DidHit(bool hitSelf)
+        {
+            this.hitSelf = hitSelf;
         }
         public void ApplySkin()
         {
