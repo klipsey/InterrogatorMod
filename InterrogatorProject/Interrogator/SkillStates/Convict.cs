@@ -77,6 +77,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public override void OnExit()
         {
+            base.OnExit();
             aimRequest?.Dispose();
         }
     }

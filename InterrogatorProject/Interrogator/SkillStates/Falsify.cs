@@ -31,8 +31,6 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public static float damageCoefficient = InterrogatorStaticValues.falsifyDamageCoefficient;
 
-        public static float procCoefficient = 1f;
-
         public static GameObject hitEffectPrefab = InterrogatorAssets.batHitEffectRed;
 
         public static float hitPauseDuration = 0.012f;
@@ -87,6 +85,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
             overlapAttack.damageType = DamageType.Stun1s;
             overlapAttack.AddModdedDamageType(DamageTypes.InterrogatorGuilty);
             overlapAttack.teamIndex = TeamIndex.None;
+            overlapAttack.procCoefficient = 1f;
             overlapAttack.impactSound = InterrogatorAssets.batImpactSoundEvent.index;
             if (this.isConvicting) overlapAttack.AddModdedDamageType(DamageTypes.InterrogatorConvict);
             if (NetworkServer.active)
@@ -130,9 +129,9 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 base.characterMotor.velocity = Vector3.zero;
                 if (!inHitPause)
                 {
-                    bool num = overlapAttack.Fire();
+                    bool fired = overlapAttack.Fire();
                     stopwatch += Time.fixedDeltaTime;
-                    if (num)
+                    if (fired)
                     {
                         if (!hasHit)
                         {
