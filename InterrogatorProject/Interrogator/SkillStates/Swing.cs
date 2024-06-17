@@ -37,7 +37,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
             hitStopDuration = 0.012f;
             attackRecoil = 0.5f;
-            hitHopVelocity = 4f;
+            hitHopVelocity = this.isConvicting ? 2f : 4f;
 
             swingSoundString = this.isConvicting ? "Play_merc_sword_swing" : "sfx_driver_swing";
             hitSoundString = "";
@@ -104,7 +104,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 DamageInfo selfDamage = new DamageInfo();
                 selfDamage.attacker = base.gameObject;
                 selfDamage.inflictor = base.gameObject;
-                selfDamage.damage = this.damageCoefficient * this.damageStat;
+                selfDamage.damage = this.damageCoefficient * this.damageStat * 0.75f;
                 selfDamage.procCoefficient = 0.5f;
                 selfDamage.crit = RollCrit();
                 selfDamage.damageType = DamageType.NonLethal;

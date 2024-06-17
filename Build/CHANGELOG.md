@@ -1,3 +1,9 @@
+# 0.6.0
+
+- Added a barrier and armor boost after killing a convicted target
+- Made Convict ending time more responsive
+- Lowered self damage slightly
+
 # 0.5.6 
 
 - Fixed self damage always applying for clients

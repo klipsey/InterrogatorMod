@@ -24,22 +24,20 @@ namespace InterrogatorMod.Interrogator.Components
         {
             if(characterBody)
             {
-                if(!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
+                if(!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || characterBody.healthComponent.alive == false)
                 {
+                    if (NetworkServer.active)
+                    {
+                        attackerBody.SetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff.buffIndex, attackerBody.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff) - additionalGuiltyTracker);
+                        attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorConvictBuff);
+                        if(characterBody.healthComponent.alive == false)
+                        {
+                            attackerBody.healthComponent.AddBarrier(attackerBody.healthComponent.fullCombinedHealth * 0.5f);
+                            attackerBody.AddTimedBuff(RoR2.RoR2Content.Buffs.ArmorBoost, 3f);
+                        }
+                    }
                     Component.Destroy(this);
                 }
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (NetworkServer.active) 
-            {
-                for(int i = 0; i < additionalGuiltyTracker; i++)
-                {
-                    attackerBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
-                }
-                attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorConvictBuff);
             }
         }
     }
