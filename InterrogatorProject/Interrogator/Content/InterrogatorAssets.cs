@@ -60,9 +60,7 @@ namespace InterrogatorMod.Interrogator.Content
         public static void Init(AssetBundle assetBundle)
         {
             mainAssetBundle = assetBundle;
-        }
-        public static void InitAssets()
-        {
+
             CreateMaterials();
 
             CreateModels();
@@ -213,11 +211,13 @@ namespace InterrogatorMod.Interrogator.Content
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().enemyHitSoundString = "sfx_scout_cleaver_hit";
             cleaverPrefab.GetComponent<SphereCollider>().radius = 0.5f;
 
+            cleaverPrefab.GetComponent<ProjectileController>().allowPrediction = true;
+
             cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BonusToLowHealth;
             DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaverPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
             moddedDamage.Add(DamageTypes.InterrogatorPressure);
 
-            cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2ShivGhostAlt.prefab").WaitForCompletion().InstantiateClone("ScoutCleaverGhost");
+            cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2ShivGhostAlt.prefab").WaitForCompletion().InstantiateClone("InterrogatorCleaverGhost");
             cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab.AddComponent<NetworkIdentity>();
             cleaverPrefab.GetComponent<ProjectileSimple>().desiredForwardSpeed = 120f;
             TrailRenderer trail = cleaverPrefab.AddComponent<TrailRenderer>();

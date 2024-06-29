@@ -51,8 +51,6 @@ namespace InterrogatorMod
             Modules.Language.Init();
 
             // character initialization
-            InterrogatorAssets.Init(Assets.LoadAssetBundle("interrogator"));
-            StartCoroutine(InterrogatorAssets.mainAssetBundle.UpgradeStubbedShadersAsync());
 
             new InterrogatorMod.Interrogator.InterrogatorSurvivor().Initialize();
 

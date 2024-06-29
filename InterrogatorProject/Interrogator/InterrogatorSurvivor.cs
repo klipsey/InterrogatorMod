@@ -70,32 +70,26 @@ namespace InterrogatorMod.Interrogator
                 new CustomRendererInfo
                 {
                     childName = "Model",
-                    dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
                     childName = "MeleeModel",
-                    dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
                     childName = "CleaverModel",
-                    dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
                     childName = "JacketModel",
-                    dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
                     childName = "VisorModel",
-                    dontHotpoo = true,
                 },
                 new CustomRendererInfo
                 {
                     childName = "ExtraModel",
-                    dontHotpoo = true,
                 },
         };
 
@@ -139,7 +133,7 @@ namespace InterrogatorMod.Interrogator
             InterrogatorStates.Init();
             InterrogatorTokens.Init();
 
-            InterrogatorAssets.InitAssets();
+            InterrogatorAssets.Init(assetBundle);
 
             InterrogatorBuffs.Init(assetBundle);
 

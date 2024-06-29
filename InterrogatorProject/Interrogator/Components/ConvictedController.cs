@@ -10,6 +10,9 @@ namespace InterrogatorMod.Interrogator.Components
         public CharacterBody attackerBody;
         public CharacterBody characterBody;
         public int additionalGuiltyTracker;
+        private bool hasHadBuff;
+        private float delay = 0.5f;
+        private float timer;
         private void Awake()
         {
             characterBody = this.GetComponent<CharacterBody>();
@@ -22,9 +25,11 @@ namespace InterrogatorMod.Interrogator.Components
 
         private void FixedUpdate()
         {
-            if(characterBody)
+            timer += Time.fixedDeltaTime;
+            if(characterBody && timer >= delay)
             {
-                if(!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || characterBody.healthComponent.alive == false)
+                if(characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)) hasHadBuff = true;
+                if((!characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) || characterBody.healthComponent.alive == false) && hasHadBuff)
                 {
                     if (NetworkServer.active)
                     {
