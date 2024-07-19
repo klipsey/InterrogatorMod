@@ -1,3 +1,7 @@
+# 0.6.1
+
+- Fixed networking issues
+
 # 0.6.0
 
 - Added a barrier and armor boost after killing a convicted target

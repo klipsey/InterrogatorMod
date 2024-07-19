@@ -43,6 +43,7 @@ namespace InterrogatorMod
 
             NetworkingAPI.RegisterMessageType<Interrogator.Components.SyncBloodExplosion>();
             NetworkingAPI.RegisterMessageType<Interrogator.Components.SyncSelfDamage>();
+            NetworkingAPI.RegisterMessageType<Interrogator.Components.SyncSword>();
 
             //easy to use logger
             Log.Init(Logger);

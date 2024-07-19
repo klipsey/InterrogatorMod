@@ -76,7 +76,6 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
                 new SyncSelfDamage(identity.netId, hitSelf).Send(NetworkDestination.Server);
             }
-
         }
 
         protected override void PlaySwingEffect()

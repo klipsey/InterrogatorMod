@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 using InterrogatorMod.Interrogator.Components;
 using static RoR2.OverlapAttack;
 using System;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 
 namespace InterrogatorMod.Interrogator.SkillStates
 {
@@ -29,40 +31,54 @@ namespace InterrogatorMod.Interrogator.SkillStates
         {
             RefreshState();
             base.OnEnter();
+
             duration = baseDuration / attackSpeedStat;
             tracker = this.GetComponent<InterrogatorTracker>();
-            if(tracker)
+
+            if(base.isAuthority && tracker)
             {
-                victim = tracker.GetTrackingTarget();
-                if(victim)
+                victim = this.tracker.GetTrackingTarget();
+            }
+
+            if (victim && victim.healthComponent && victim.healthComponent.body) victimBody = victim.healthComponent.body;
+
+            if (!victim || !victimBody || !tracker)
+            {
+                this.skillLocator.special.AddOneStock();
+                this.outer.SetNextStateToMain();
+                return;
+            }
+
+            if (base.cameraTargetParams)
+            {
+                aimRequest = base.cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+            }
+
+            StartAimMode(duration);
+
+            PlayAnimation("Gesture, Override", "Point", "Swing.playbackRate", duration * 1.5f);
+
+            EffectManager.SpawnEffect(markedPrefab, new EffectData
+            {
+                origin = victimBody.corePosition,
+                scale = 1.5f
+            }, transmit: true);
+
+            if(NetworkServer.active)
+            {
+                characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictDurationMax);
+                victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictDurationMax);
+
+                if (!this.victimBody.gameObject.GetComponent<ConvictedController>())
                 {
-                    victimBody = victim.healthComponent.body;
-                    if((victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) || characterBody.skillLocator.special.skillNameToken == InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME") && !victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
-                    {
-                        if (base.cameraTargetParams)
-                        {
-                            aimRequest = base.cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
-                        }
-                        StartAimMode(duration);
-                        PlayAnimation("Gesture, Override", "Point", "Swing.playbackRate", duration * 1.5f);
-                        EffectManager.SpawnEffect(markedPrefab, new EffectData
-                        {
-                            origin = victimBody.corePosition,
-                            scale = 1.5f
-                        }, transmit: true);
-
-                        this.interrogatorController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (this.characterBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
-
-                        if (NetworkServer.active)
-                        {
-                            victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
-                            characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, this.interrogatorController.convictDurationMax);
-                        }
-                        this.victimBody.gameObject.AddComponent<ConvictedController>();
-                        this.victimBody.gameObject.GetComponent<ConvictedController>().attackerBody = base.characterBody;
-                        this.interrogatorController.EnableSword();
-                    }
+                    this.victimBody.gameObject.AddComponent<ConvictedController>();
                 }
+                this.victimBody.gameObject.GetComponent<ConvictedController>().attackerBody = base.characterBody;
+
+                NetworkIdentity identity = base.gameObject.GetComponent<NetworkIdentity>();
+                if (!identity) return;
+
+                new SyncSword(identity.netId, true).Send(NetworkDestination.Clients);
             }
         }
 
@@ -79,6 +95,16 @@ namespace InterrogatorMod.Interrogator.SkillStates
         {
             base.OnExit();
             aimRequest?.Dispose();
+            victim = null;
+            victimBody = null;
+        }
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write(HurtBoxReference.FromHurtBox(victim));
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            victim = reader.ReadHurtBoxReference().ResolveHurtBox();
         }
     }
 }

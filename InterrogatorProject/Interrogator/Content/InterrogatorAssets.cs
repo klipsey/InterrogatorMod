@@ -206,12 +206,12 @@ namespace InterrogatorMod.Interrogator.Content
         private static void CreateProjectiles()
         {
             cleaverPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2ShivProjectile.prefab").WaitForCompletion().InstantiateClone("InterrogatorCleaver");
-            cleaverPrefab.AddComponent<NetworkIdentity>();
+            if(!cleaverPrefab.GetComponent<NetworkIdentity>()) cleaverPrefab.AddComponent<NetworkIdentity>();
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().hitSoundString = "sfx_scout_cleaver_miss";
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().enemyHitSoundString = "sfx_scout_cleaver_hit";
             cleaverPrefab.GetComponent<SphereCollider>().radius = 0.5f;
 
-            cleaverPrefab.GetComponent<ProjectileController>().allowPrediction = true;
+            cleaverPrefab.GetComponent<ProjectileController>().allowPrediction = false;
 
             cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BonusToLowHealth;
             DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaverPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();

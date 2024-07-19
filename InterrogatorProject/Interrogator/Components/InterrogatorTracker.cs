@@ -31,8 +31,6 @@ namespace InterrogatorMod.Interrogator.Components
 
         private Indicator indicator;
 
-        private bool onCooldown;
-
         private readonly BullseyeSearch search = new BullseyeSearch();
 
         private void Awake()
@@ -49,18 +47,7 @@ namespace InterrogatorMod.Interrogator.Components
 
         public HurtBox GetTrackingTarget()
         {
-            if (trackingTarget != null)
-            {
-                if (!onCooldown)
-                {
-                    return trackingTarget;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else return trackingTarget;
+            return trackingTarget;
         }
         private void OnEnable()
         {
@@ -81,19 +68,7 @@ namespace InterrogatorMod.Interrogator.Components
                 _ = trackingTarget;
                 Ray aimRay = new Ray(inputBank.aimOrigin, inputBank.aimDirection);
                 SearchForTarget(aimRay);
-                if (trackingTarget != null && characterBody.skillLocator.special.skillNameToken != InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
-                {
-                    onCooldown = !trackingTarget.healthComponent.body.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
-                }
-                else if (characterBody.skillLocator.special.skillNameToken == InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME") onCooldown = false;
-                if (onCooldown)
-                {
-                    indicator.targetTransform = null;
-                }
-                else
-                {
-                    indicator.targetTransform = trackingTarget ? trackingTarget.transform : null;
-                }
+                indicator.targetTransform = (trackingTarget ? trackingTarget.transform : null);
             }
         }
 
@@ -107,7 +82,17 @@ namespace InterrogatorMod.Interrogator.Components
             search.maxDistanceFilter = maxTrackingDistance;
             search.maxAngleFilter = maxTrackingAngle;
             search.RefreshCandidates();
-            search.FilterOutGameObject(gameObject);
+            search.FilterOutGameObject(base.gameObject);
+            foreach (HurtBox hurt in this.search.GetResults())
+            {
+                if (hurt && hurt.healthComponent && hurt.healthComponent.body)
+                {
+                    if (!hurt.healthComponent.body.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && characterBody.skillLocator.special.skillNameToken != InterrogatorSurvivor.INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
+                    {
+                        this.search.FilterOutGameObject(hurt.healthComponent.gameObject);
+                    }
+                }
+            }
             trackingTarget = search.GetResults().FirstOrDefault();
         }
     }

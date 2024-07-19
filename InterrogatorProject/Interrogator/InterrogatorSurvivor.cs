@@ -553,6 +553,7 @@ namespace InterrogatorMod.Interrogator
                                 self.damage += 0.5f;
                             }
                         }
+                        iController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (self.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
                     }
                 }
                 if(self.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
