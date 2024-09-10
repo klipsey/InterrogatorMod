@@ -32,7 +32,7 @@ namespace InterrogatorMod.Modules.Characters
         public virtual void Initialize()
         {
             instance = this as T;
-            assetBundle = Assets.LoadAssetBundle(assetBundleName);
+            assetBundle = CharacterAssets.LoadAssetBundle(assetBundleName);
             InitializeCharacter();
         }
 

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using R2API.Networking;
-using ShaderSwapper;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -59,11 +58,6 @@ namespace InterrogatorMod
             new Modules.ContentPacks().Initialize();
 
             //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
-        }
-
-        private void Start()
-        {
-            SoundBanks.Init();
         }
     }
 }

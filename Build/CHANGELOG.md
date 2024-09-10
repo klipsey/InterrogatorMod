@@ -1,3 +1,11 @@
+# 0.6.3
+
+- No more console spam
+
+# 0.6.2
+
+- Sots
+
 # 0.6.1
 
 - Fixed networking issues
