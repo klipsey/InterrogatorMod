@@ -19,8 +19,8 @@ using InterrogatorMod.Interrogator.SkillStates;
 using HG;
 using EntityStates;
 using R2API.Networking.Interfaces;
-using EmotesAPI;
 using System.Runtime.CompilerServices;
+using EmotesAPI;
 
 namespace InterrogatorMod.Interrogator
 {
@@ -501,28 +501,43 @@ namespace InterrogatorMod.Interrogator
 
         private void AddHooks()
         {
-            //HUD.onHudTargetChangedGlobal += HUDSetup;
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
             On.RoR2.UI.LoadoutPanelController.Rebuild += LoadoutPanelController_Rebuild;
             On.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_TakeDamageProcess;
-            GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
-            On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
-            if(InterrogatorPlugin.emotesInstalled) Emotes();
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        private static void Emotes()
-        {
-            On.RoR2.SurvivorCatalog.Init += (orig) =>
+            if (InterrogatorPlugin.emotesInstalled)
             {
-                orig();
-                var skele = InterrogatorAssets.mainAssetBundle.LoadAsset<GameObject>("interrogator_emoteskeleton");
-                CustomEmotesAPI.ImportArmature(InterrogatorSurvivor.characterPrefab, skele);
-            };
+                Emotes();
+            }
         }
-
-
-        private static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)
+        internal void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
+            {
+                InterrogatorController iController = sender.gameObject.GetComponent<InterrogatorController>();
+                if (iController)
+                {
+                    if (sender.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff))
+                    {
+                        for (int i = 0; i < sender.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
+                        {
+                            args.attackSpeedMultAdd += 0.15f;
+                            args.baseDamageAdd += 0.5f;
+                        }
+                    }
+                    iController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (sender.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
+                }
+            }
+            if (sender.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
+            {
+                args.attackSpeedMultAdd *= 1.15f;
+                args.moveSpeedMultAdd += 0.15f;
+                sender.armor *= 0.9f;
+                sender.damage *= 0.9f;
+            }
+        }
+        internal static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)
         {
             orig(self);
 
@@ -534,38 +549,7 @@ namespace InterrogatorMod.Interrogator
                 }
             }
         }
-        private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
-        {
-            orig(self);
-
-            if (self)
-            {
-                if(self.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
-                {
-                    InterrogatorController iController = self.gameObject.GetComponent<InterrogatorController>();
-                    if(iController)
-                    {
-                        if (self.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff))
-                        {
-                            for(int i = 0; i < self.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
-                            {
-                                self.attackSpeed += 0.15f;
-                                self.damage += 0.5f;
-                            }
-                        }
-                        iController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (self.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
-                    }
-                }
-                if(self.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
-                {
-                    self.attackSpeed *= 1.15f;
-                    self.moveSpeed *= 1.15f;
-                    self.armor *= 0.9f;
-                    self.damage *= 0.9f;
-                }
-            }
-        }
-        private void HealthComponent_TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
+        internal static void HealthComponent_TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
             if (NetworkServer.active && self.alive || !self.godMode || self.ospTimer <= 0f)
             {
@@ -633,7 +617,7 @@ namespace InterrogatorMod.Interrogator
 
             orig.Invoke(self, damageInfo);
         }
-        private static void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
+        internal static void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
         {
             CharacterBody attackerBody = damageReport.attackerBody;
             if (attackerBody && damageReport.attackerMaster && damageReport.victim)
@@ -661,64 +645,36 @@ namespace InterrogatorMod.Interrogator
                 }
             }
         }
-        internal static void HUDSetup(HUD hud)
+
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        private void Emotes()
         {
-            /*
-            if (hud.targetBodyObject && hud.targetMaster && hud.targetMaster.bodyPrefab == InterrogatorSurvivor.characterPrefab)
+            On.RoR2.SurvivorCatalog.Init += (orig) =>
             {
-                if (!hud.targetMaster.hasAuthority) return;
-                Transform skillsContainer = hud.equipmentIcons[0].gameObject.transform.parent;
-
-                // ammo display for atomic
-                Transform healthbarContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster").Find("BarRoots").Find("LevelDisplayCluster");
-
-                GameObject stealthTracker = GameObject.Instantiate(healthbarContainer.gameObject, hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster"));
-                stealthTracker.name = "AmmoTracker";
-                stealthTracker.transform.SetParent(hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras"));
-
-                GameObject.DestroyImmediate(stealthTracker.transform.GetChild(0).gameObject);
-                MonoBehaviour.Destroy(stealthTracker.GetComponentInChildren<LevelText>());
-                MonoBehaviour.Destroy(stealthTracker.GetComponentInChildren<ExpBar>());
-
-                stealthTracker.transform.Find("LevelDisplayRoot").Find("ValueText").gameObject.SetActive(false);
-                GameObject.DestroyImmediate(stealthTracker.transform.Find("ExpBarRoot").gameObject);
-
-                stealthTracker.transform.Find("LevelDisplayRoot").GetComponent<RectTransform>().anchoredPosition = new Vector2(-12f, 0f);
-
-                RectTransform rect = stealthTracker.GetComponent<RectTransform>();
-                rect.localScale = new Vector3(0.8f, 0.8f, 1f);
-                rect.anchorMin = new Vector2(0f, 0f);
-                rect.anchorMax = new Vector2(0f, 0f);
-                rect.offsetMin = new Vector2(120f, -40f);
-                rect.offsetMax = new Vector2(120f, -40f);
-                rect.pivot = new Vector2(0.5f, 0f);
-                //positional data doesnt get sent to clients? Manually making offsets works..
-                rect.anchoredPosition = new Vector2(50f, 0f);
-                rect.localPosition = new Vector3(120f, -40f, 0f);
-
-                GameObject chargeBarAmmo = GameObject.Instantiate(InterrogatorAssets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
-                chargeBarAmmo.name = "StealthMeter";
-                chargeBarAmmo.transform.SetParent(hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras"));
-
-                rect = chargeBarAmmo.GetComponent<RectTransform>();
-
-                rect.localScale = new Vector3(0.75f, 0.1f, 1f);
-                rect.anchorMin = new Vector2(100f, 2f);
-                rect.anchorMax = new Vector2(100f, 2f);
-                rect.pivot = new Vector2(0.5f, 0f);
-                rect.anchoredPosition = new Vector2(100f, 2f);
-                rect.localPosition = new Vector3(100f, 2f, 0f);
-                rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
-
-                ConvictHudController stealthComponent = stealthTracker.AddComponent<ConvictHudController>();
-
-                stealthComponent.targetHUD = hud;
-                stealthComponent.targetText = stealthTracker.transform.Find("LevelDisplayRoot").Find("PrefixText").gameObject.GetComponent<LanguageTextMeshController>();
-                stealthComponent.durationDisplay = chargeBarAmmo;
-                stealthComponent.durationBar = chargeBarAmmo.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
-                stealthComponent.durationBarColor = chargeBarAmmo.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
+                orig();
+                var skele = InterrogatorAssets.mainAssetBundle.LoadAsset<GameObject>("interrogator_emoteskeleton");
+                CustomEmotesAPI.ImportArmature(InterrogatorSurvivor.characterPrefab, skele);
+            };
+            CustomEmotesAPI.animChanged += CustomEmotesAPI_animChanged;
+        }
+        private void CustomEmotesAPI_animChanged(string newAnimation, BoneMapper mapper)
+        {
+            if (newAnimation != "none")
+            {
+                if (mapper.transform.name == "interrogator_emoteskeleton")
+                {
+                    mapper.transform.parent.Find("meshCleaver").gameObject.SetActive(value: false);
+                    mapper.transform.parent.Find("meshBat").gameObject.SetActive(value: false);
+                }
             }
-            */
+            else
+            {
+                if (mapper.transform.name == "interrogator_emoteskeleton")
+                {
+                    mapper.transform.parent.Find("meshCleaver").gameObject.SetActive(value: true);
+                    mapper.transform.parent.Find("meshBat").gameObject.SetActive(value: true);
+                }
+            }
         }
     }
 }

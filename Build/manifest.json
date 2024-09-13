@@ -1,9 +1,9 @@
 {
     "name": "Interrogator",
     "author": "tsuyoikenko",
-    "version_number": "0.6.3",
+    "version_number": "0.6.5",
     "website_url": "https://github.com/klipsey/InterrogatorMod",
-    "description": "Adds the Interrogator. Hit your friends! Sots fixes.",
+    "description": "Adds the Interrogator, a survivor that hurts himself and allies to increase his damage.",
     "dependencies": [
         "bbepis-BepInExPack-5.4.2117",
 	"RiskofThunder-R2API_TempVisualEffect-1.0.2",

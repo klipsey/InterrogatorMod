@@ -1,3 +1,11 @@
+# 0.6.5
+
+- Fixed emote compat and ai
+
+# 0.6.4
+
+- Fixed Ragdoll
+
 # 0.6.3
 
 - No more console spam

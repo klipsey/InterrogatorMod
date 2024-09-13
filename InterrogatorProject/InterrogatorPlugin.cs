@@ -34,7 +34,6 @@ namespace InterrogatorMod
         public static InterrogatorPlugin instance;
 
         public static bool emotesInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.weliveinasociety.CustomEmotesAPI");
-
         public static bool scepterInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
         void Awake()
         {
