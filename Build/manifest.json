@@ -1,7 +1,7 @@
 {
     "name": "Interrogator",
     "author": "tsuyoikenko",
-    "version_number": "0.6.5",
+    "version_number": "0.6.6",
     "website_url": "https://github.com/klipsey/InterrogatorMod",
     "description": "Adds the Interrogator, a survivor that hurts himself and allies to increase his damage.",
     "dependencies": [

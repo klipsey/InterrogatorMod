@@ -1,3 +1,7 @@
+# 0.6.6
+
+- Fixed error
+
 # 0.6.5
 
 - Fixed emote compat and ai
