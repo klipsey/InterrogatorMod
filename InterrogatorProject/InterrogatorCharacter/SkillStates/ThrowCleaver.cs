@@ -30,6 +30,8 @@ namespace InterrogatorMod.Interrogator.SkillStates
             base.projectilePitchBonus = -3.5f;
 
             base.OnEnter();
+
+            SmallHop(characterMotor, 5f);
         }
 
         public override void FireProjectile()
