@@ -53,25 +53,31 @@ namespace InterrogatorMod.Interrogator.Content
 
             #region Primary
             Language.Add(prefix + "PRIMARY_SWING_NAME", "Brutal Bash");
-            Language.Add(prefix + "PRIMARY_SWING_DESCRIPTION", $"Swing in front dealing <style=cIsDamage>{InterrogatorStaticValues.swingDamageCoefficient * 100f}% damage</style>. " +
+            Language.Add(prefix + "PRIMARY_SWING_DESCRIPTION", $"Swing in front dealing " +
+                $"<style=cIsDamage>{InterrogatorConfig.brutalBashDamageCoefficient.Value * 100f}% damage</style>. " +
                 $"Missing the attack causes you to take <style=cIsDamage>damage</style> instead.");
             #endregion
 
             #region Secondary
             Language.Add(prefix + "SECONDARY_AFFRAY_NAME", "Affray");
-            Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $"<style=cIsDamage>Slayer.</style> Launch a cleaver that deals <style=cIsDamage>{InterrogatorStaticValues.cleaverDamageCoefficient * 100f}% damage</style>. " +
-                $"If <color=#FFBF66>Affray</color> kills its target, apply <style=cIsDamage>Hemmorhage</style> and <color=#FFBF66>Pressure</color> to everyone in the area.");
+            Language.Add(prefix + "SECONDARY_AFFRAY_DESCRIPTION", $"<style=cIsDamage>Slayer.</style> Launch a cleaver that deals " +
+                $"<style=cIsDamage>{InterrogatorConfig.affrayDamageCoefficient.Value * 100f}% damage</style>. " +
+                $"If <color=#FFBF66>Affray</color> kills its target, apply <style=cIsDamage>Hemmorhage</style> and " +
+                $"<color=#FFBF66>Pressure</color> to everyone in the area.");
             #endregion
 
             #region Utility 
             Language.Add(prefix + "UTILITY_FALSIFY_NAME", "Falsify");
-            Language.Add(prefix + "UTILITY_FALSIFY_DESCRIPTION", $"Dash forward dealing <style=cIsDamage>{InterrogatorStaticValues.falsifyDamageCoefficient * 100f}% damage</style> applying <color=#FFBF66>Guilty</color> to targets hit.");
+            Language.Add(prefix + "UTILITY_FALSIFY_DESCRIPTION", $"Dash forward dealing " +
+                $"<style=cIsDamage>{InterrogatorConfig.falsifyDamageCoefficient.Value * 100f}% damage</style> " +
+                $"applying <color=#FFBF66>Guilty</color> to targets hit.");
 
             #endregion
 
             #region Special
             Language.Add(prefix + "SPECIAL_CONVICT_NAME", "Convict");
-            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and fight them for 10 seconds. Your primary can no longer hit you but can continuously stack <color=#FFBF66>Guilty's</color> buff. " +
+            Language.Add(prefix + "SPECIAL_CONVICT_DESCRIPTION", $"Target a <color=#FFBF66>Guilty</color> enemy and fight them for 10 seconds. " +
+                $"Your primary can no longer hit you but can continuously stack <color=#FFBF66>Guilty's</color> buff. " +
                 $"During <color=#FFBF66>Convict</color> all external <style=cIsDamage>damage</style> is negated including your own.");
 
             Language.Add(prefix + "SPECIAL_SCEPTER_CONVICT_NAME", "Punish");

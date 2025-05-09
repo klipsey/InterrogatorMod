@@ -15,13 +15,15 @@ namespace InterrogatorMod.Interrogator.SkillStates
     public class Swing : BaseMeleeAttack
     {
         public bool hitSelf = true;
+        private bool hasHitSelf = false;
         public override void OnEnter()
         {
+            hasHitSelf = false;
             RefreshState();
             hitboxGroupName = "MeleeHitbox";
 
             damageType = DamageType.Generic;
-            damageCoefficient = InterrogatorStaticValues.swingDamageCoefficient;
+            damageCoefficient = InterrogatorConfig.brutalBashDamageCoefficient.Value;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
@@ -91,14 +93,13 @@ namespace InterrogatorMod.Interrogator.SkillStates
             }
         }
 
-        protected override void PlayAttackAnimation()
+        public override void FixedUpdate()
         {
-            PlayCrossfade("Gesture, Override", "Swing" + (1 + swingIndex), playbackRateParam, duration * 2.2f, 0.05f);
-        }
+            base.FixedUpdate();
 
-        public override void OnExit()
-        {
-            if(this.interrogatorController.hitSelf && !isConvicting)
+            bool fireEnded = stopwatch >= duration * attackEndPercentTime;
+
+            if (fireEnded && this.interrogatorController.hitSelf && !isConvicting && !hasHitSelf)
             {
                 DamageInfo selfDamage = new DamageInfo();
                 selfDamage.attacker = base.gameObject;
@@ -113,11 +114,23 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 selfDamage.force = Vector3.zero;
                 selfDamage.dotIndex = DotController.DotIndex.None;
                 selfDamage.position = base.transform.position;
+                selfDamage.damageType.damageSource = DamageSource.Primary;
 
                 this.healthComponent.TakeDamage(selfDamage);
 
+                hasHitSelf = true;
+
                 Util.PlaySound("sfx_scout_baseball_impact", base.gameObject);
             }
+        }
+
+        protected override void PlayAttackAnimation()
+        {
+            PlayCrossfade("Gesture, Override", "Swing" + (1 + swingIndex), playbackRateParam, duration * 2.2f, 0.05f);
+        }
+
+        public override void OnExit()
+        {
             base.OnExit();
         }
 

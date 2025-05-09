@@ -13,7 +13,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
     {
         public static float baseDuration = 0.2f;
         public static float baseDelayDuration = 0.3f * baseDuration;
-        public GameObject cleaver = InterrogatorAssets.cleaverPrefab;
+        public GameObject cleaverPrefab = InterrogatorAssets.cleaverPrefab;
         public InterrogatorController interrogatorController;
         private ChildLocator childLocator;
         public override void OnEnter()
@@ -31,7 +31,10 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
             base.OnEnter();
 
-            SmallHop(characterMotor, 5f);
+            if(!characterMotor.isGrounded)
+            {
+                SmallHop(characterMotor, 5f);
+            }
         }
 
         public override void FireProjectile()
@@ -41,12 +44,17 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 Ray aimRay = base.GetAimRay();
                 aimRay = this.ModifyProjectileAimRay(aimRay);
                 aimRay.direction = Util.ApplySpread(aimRay.direction, 0f, 0f, 1f, 1f, 0f, this.projectilePitchBonus);
-                DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaver.GetComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
-                moddedDamage.Add(DamageTypes.InterrogatorPressure);
-                if(base.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)) moddedDamage.Add(DamageTypes.InterrogatorConvict);
-                ProjectileManager.instance.FireProjectile(cleaver, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * InterrogatorStaticValues.cleaverDamageCoefficient, this.force, this.RollCrit(), DamageColorIndex.Default, null, -1f);
-                if (moddedDamage.Has(DamageTypes.InterrogatorPressure)) moddedDamage.Remove(DamageTypes.InterrogatorPressure);
-                if (moddedDamage.Has(DamageTypes.InterrogatorConvict)) moddedDamage.Remove(DamageTypes.InterrogatorConvict);
+                ProjectileDamage moddedDamage = cleaverPrefab.GetComponent<ProjectileDamage>();
+                interrogatorController = base.GetComponent<InterrogatorController>();
+                if(interrogatorController.isConvicted) moddedDamage.damageType.AddModdedDamageType(DamageTypes.InterrogatorConvict);
+
+                ProjectileManager.instance.FireProjectile(cleaverPrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, 
+                    this.damageStat * InterrogatorConfig.affrayDamageCoefficient.Value, this.force, this.RollCrit(), DamageColorIndex.Default, null, -1f);
+
+                if (moddedDamage.damageType.HasModdedDamageType(DamageTypes.InterrogatorConvict))
+                {
+                    moddedDamage.damageType.RemoveModdedDamageType(DamageTypes.InterrogatorConvict);
+                }
             }
         }
 

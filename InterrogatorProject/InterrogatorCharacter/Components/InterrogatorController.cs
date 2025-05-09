@@ -23,14 +23,12 @@ namespace InterrogatorMod.Interrogator.Components
         private Material[] batMat;
         public string currentSkinNameToken => this.skinController.skins[this.skinController.currentSkinIndex].nameToken;
         public string altSkinNameToken => InterrogatorSurvivor.INTERROGATOR_PREFIX + "MASTERY_SKIN_NAME";
-
-        private bool hasPlayed = true;
         public bool isConvicted => this.characterBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff);
         private bool stopwatchOut = false;
         public bool pauseTimer = false;
         public bool hitSelf { get; private set; }
 
-        public float convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax;
+        public float convictMaxDuration = InterrogatorConfig.convictMaxDuration.Value;
 
         private uint playID1;
         private void Awake()
@@ -115,12 +113,10 @@ namespace InterrogatorMod.Interrogator.Components
         public void EnableSword()
         {
             this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.swordMesh;
-            hasPlayed = false;
         }
         public void DisableSword() 
         {
             this.childLocator.FindChild("MeleeModel").gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = InterrogatorAssets.batMesh;
-            hasPlayed = true;
         }
         private void OnDestroy()
         {

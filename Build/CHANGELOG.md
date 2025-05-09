@@ -1,3 +1,7 @@
+# 0.6.7
+
+- Playable for Sots v3
+
 # 0.6.6
 
 - Fixed error

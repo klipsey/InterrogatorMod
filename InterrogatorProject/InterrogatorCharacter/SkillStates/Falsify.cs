@@ -30,7 +30,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public static string endSoundString = "sfx_interrogator_dash";
 
-        public static float damageCoefficient = InterrogatorStaticValues.falsifyDamageCoefficient;
+        public static float damageCoefficient = InterrogatorConfig.falsifyDamageCoefficient.Value;
 
         public static GameObject hitEffectPrefab = InterrogatorAssets.batHitEffectRed;
 

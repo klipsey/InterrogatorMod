@@ -52,17 +52,27 @@ namespace InterrogatorMod.Interrogator
             crosshair = Modules.CharacterAssets.LoadCrosshair("Standard"),
             podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
-            maxHealth = 160f,
-            healthRegen = 2.5f,
-            regenGrowth = 2.5f * 0.2f,
-            armor = 20f,
-            damage = 12f,
-
-            damageGrowth = 2.4f,
-            healthGrowth = 160f * 0.3f,
-
-
-            jumpCount = 1,
+            damage = InterrogatorConfig.damage.Value,
+            damageGrowth = InterrogatorConfig.damageGrowth.Value * InterrogatorConfig.damage.Value,
+            attackSpeed = InterrogatorConfig.attackSpeed.Value,
+            attackSpeedGrowth = InterrogatorConfig.attackSpeedGrowth.Value,
+            crit = InterrogatorConfig.crit.Value,
+            critGrowth = InterrogatorConfig.critGrowth.Value,
+            maxHealth = InterrogatorConfig.maxHealth.Value,
+            healthGrowth = InterrogatorConfig.healthGrowth.Value * InterrogatorConfig.maxHealth.Value,
+            healthRegen = InterrogatorConfig.healthRegen.Value,
+            regenGrowth = InterrogatorConfig.regenGrowth.Value * InterrogatorConfig.healthRegen.Value,
+            shield = InterrogatorConfig.shield.Value,
+            shieldGrowth = InterrogatorConfig.shieldGrowth.Value * InterrogatorConfig.shield.Value,
+            armor = InterrogatorConfig.armor.Value,
+            armorGrowth = InterrogatorConfig.armorGrowth.Value * InterrogatorConfig.armor.Value,
+            moveSpeed = InterrogatorConfig.moveSpeed.Value,
+            moveSpeedGrowth = InterrogatorConfig.moveSpeedGrowth.Value * InterrogatorConfig.moveSpeed.Value,
+            jumpPower = InterrogatorConfig.jumpPower.Value,
+            jumpPowerGrowth = InterrogatorConfig.jumpPowerGrowth.Value * InterrogatorConfig.jumpPower.Value,
+            acceleration = InterrogatorConfig.acceleration.Value,
+            jumpCount = InterrogatorConfig.jumpCount.Value,
+            autoCalculateLevelStats = InterrogatorConfig.autoCalculateLevelStats.Value,
         };
 
         public override CustomRendererInfo[] customRendererInfos => new CustomRendererInfo[]
@@ -526,7 +536,7 @@ namespace InterrogatorMod.Interrogator
                             args.baseDamageAdd += 0.5f;
                         }
                     }
-                    iController.convictDurationMax = InterrogatorStaticValues.baseConvictTimerMax + (sender.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
+                    iController.convictMaxDuration = InterrogatorConfig.convictMaxDuration.Value + (sender.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
                 }
             }
             if (sender.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))

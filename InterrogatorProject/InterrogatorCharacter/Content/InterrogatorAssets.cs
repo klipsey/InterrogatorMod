@@ -215,9 +215,10 @@ namespace InterrogatorMod.Interrogator.Content
 
             cleaverPrefab.GetComponent<ProjectileController>().allowPrediction = false;
 
-            cleaverPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BonusToLowHealth;
-            DamageAPI.ModdedDamageTypeHolderComponent moddedDamage = cleaverPrefab.AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>();
-            moddedDamage.Add(DamageTypes.InterrogatorPressure);
+            var damage = cleaverPrefab.GetComponent<ProjectileDamage>();
+            damage.damageType = DamageType.BonusToLowHealth;
+            damage.damageType.AddModdedDamageType(DamageTypes.InterrogatorPressure);
+            damage.damageType.damageSource = DamageSource.Secondary;
 
             cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2ShivGhostAlt.prefab").WaitForCompletion().InstantiateClone("InterrogatorCleaverGhost");
             cleaverPrefab.GetComponent<ProjectileController>().ghostPrefab.AddComponent<NetworkIdentity>();

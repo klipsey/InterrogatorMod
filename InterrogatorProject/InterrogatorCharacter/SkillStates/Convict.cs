@@ -66,8 +66,8 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
             if(NetworkServer.active)
             {
-                characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictDurationMax);
-                victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictDurationMax);
+                characterBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictMaxDuration);
+                victimBody.AddTimedBuff(InterrogatorBuffs.interrogatorConvictBuff, interrogatorController.convictMaxDuration);
 
                 if (!this.victimBody.gameObject.GetComponent<ConvictedController>())
                 {
