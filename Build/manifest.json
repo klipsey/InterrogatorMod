@@ -1,7 +1,7 @@
 {
     "name": "Interrogator",
     "author": "tsuyoikenko",
-    "version_number": "0.6.7",
+    "version_number": "0.7.2",
     "website_url": "https://github.com/klipsey/InterrogatorMod",
     "description": "Adds the Interrogator.",
     "dependencies": [

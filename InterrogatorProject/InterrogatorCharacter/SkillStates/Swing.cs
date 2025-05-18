@@ -37,9 +37,9 @@ namespace InterrogatorMod.Interrogator.SkillStates
             //this is the point at which the attack can be interrupted by itself, continuing a combo
             earlyExitPercentTime = 1f;
 
-            hitStopDuration = 0.012f;
+            hitStopDuration = 0.05f;
             attackRecoil = 0.5f;
-            hitHopVelocity = this.isConvicting ? 2f : 4f;
+            hitHopVelocity = this.isConvicting ? 4f : 8f;
 
             swingSoundString = this.isConvicting ? "Play_merc_sword_swing" : "sfx_driver_swing";
             hitSoundString = "";

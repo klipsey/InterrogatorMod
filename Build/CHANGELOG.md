@@ -1,3 +1,12 @@
+# 0.7.2
+
+- Doubled hithop velocity
+- Double hitbox ranges for melee attacks
+
+# 0.7.1 
+
+- Trololol?
+
 # 0.6.7
 
 - Playable for Sots v3
