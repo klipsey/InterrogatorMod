@@ -513,7 +513,6 @@ namespace InterrogatorMod.Interrogator
         {
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
-            On.RoR2.UI.LoadoutPanelController.Rebuild += LoadoutPanelController_Rebuild;
             On.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_TakeDamageProcess;
 
             if (InterrogatorPlugin.emotesInstalled)
@@ -523,40 +522,29 @@ namespace InterrogatorMod.Interrogator
         }
         internal void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
+            InterrogatorController iController = sender.gameObject.GetComponent<InterrogatorController>();
+            if (iController)
             {
-                InterrogatorController iController = sender.gameObject.GetComponent<InterrogatorController>();
-                if (iController)
+                iController.convictMaxDuration = InterrogatorConfig.convictMaxDuration.Value +
+                    (sender.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
+            }
+
+            if (sender.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff))
+            {
+                for (int i = 0; i < sender.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
                 {
-                    if (sender.HasBuff(InterrogatorBuffs.interrogatorGuiltyBuff))
-                    {
-                        for (int i = 0; i < sender.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff); i++)
-                        {
-                            args.attackSpeedMultAdd += 0.15f;
-                            args.baseDamageAdd += 0.5f;
-                        }
-                    }
-                    iController.convictMaxDuration = InterrogatorConfig.convictMaxDuration.Value + (sender.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid) * 0.5f);
+                    args.attackSpeedMultAdd += InterrogatorConfig.guiltyAttackSpeedPerStack.Value;
+                    args.regenMultAdd += InterrogatorConfig.guiltyHealthRegenPerStack.Value;
+                    args.baseDamageAdd += InterrogatorConfig.guiltyBaseDamagePerStack.Value;
                 }
             }
+
             if (sender.HasBuff(InterrogatorBuffs.interrogatorPressuredBuff))
             {
-                args.attackSpeedMultAdd *= 1.15f;
-                args.moveSpeedMultAdd += 0.15f;
-                sender.armor *= 0.9f;
-                sender.damage *= 0.9f;
-            }
-        }
-        internal static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)
-        {
-            orig(self);
-
-            if (self.currentDisplayData.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
-            {
-                foreach (LanguageTextMeshController i in self.gameObject.GetComponentsInChildren<LanguageTextMeshController>())
-                {
-                    if (i && i.token == "LOADOUT_SKILL_MISC") i.token = "Passive";
-                }
+                args.attackSpeedMultAdd += InterrogatorConfig.pressuredAttackSpeed.Value;
+                args.moveSpeedMultAdd += InterrogatorConfig.pressuredMoveSpeed.Value;
+                args.armorAdd -= InterrogatorConfig.pressuredArmorLoss.Value * sender.armor;
+                args.damageMultAdd -= InterrogatorConfig.pressuredDamageLoss.Value;
             }
         }
         internal static void HealthComponent_TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
@@ -576,15 +564,14 @@ namespace InterrogatorMod.Interrogator
                     if(victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff)
                         || !victimBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff) && attackerBody.HasBuff(InterrogatorBuffs.interrogatorConvictBuff))
                     {
-                        if (attackerBody.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody") &&
-                            attackerBody.skillLocator.special.skillNameToken == INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
+                        if (attackerBody.skillLocator.special.skillNameToken == INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME")
                         {
                             damageInfo.damage *= 0.25f;
                         }
                         else damageInfo.rejected = true;
                     }
 
-                    if (victimBody.baseNameToken == "KENKO_INTERROGATOR_NAME")
+                    if (victimBody.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
                     {
                         InterrogatorController iController = victimBody.GetComponent<InterrogatorController>();
                         StinkyLoserController stink = attackerBody.gameObject.GetComponent<StinkyLoserController>();
@@ -594,7 +581,7 @@ namespace InterrogatorMod.Interrogator
                             {
                                 if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                                 {
-                                    damageInfo.damage *= 0.25f;
+                                    damageInfo.damage *= 1f - InterrogatorConfig.allyDamage.Value;
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
                                     stink = attackerBody.gameObject.AddComponent<StinkyLoserController>();
@@ -618,7 +605,7 @@ namespace InterrogatorMod.Interrogator
                         {
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                             {
-                                damageInfo.damage *= 0.25f;
+                                damageInfo.damage *= 1f - InterrogatorConfig.allyDamage.Value;
                             }
                         }
                     }
@@ -632,7 +619,8 @@ namespace InterrogatorMod.Interrogator
             CharacterBody attackerBody = damageReport.attackerBody;
             if (attackerBody && damageReport.attackerMaster && damageReport.victim)
             {
-                if(attackerBody.baseNameToken == "KENKO_INTERROGATOR_NAME" && damageReport.damageInfo.HasModdedDamageType(DamageTypes.InterrogatorPressure))
+                if(attackerBody.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody") && 
+                    damageReport.damageInfo.HasModdedDamageType(DamageTypes.InterrogatorPressure))
                 {
                     BlastAttack blastAttack = new BlastAttack();
                     blastAttack.attacker = damageReport.attacker;

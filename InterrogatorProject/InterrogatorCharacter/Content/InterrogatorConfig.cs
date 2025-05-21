@@ -44,6 +44,16 @@ namespace InterrogatorMod.Interrogator.Content
 
         public static ConfigEntry<float> convictMaxDuration;
 
+        public static ConfigEntry<float> guiltyHealthRegenPerStack;
+        public static ConfigEntry<float> guiltyBaseDamagePerStack;
+        public static ConfigEntry<float> guiltyAttackSpeedPerStack;
+
+        public static ConfigEntry<float> pressuredAttackSpeed;
+        public static ConfigEntry<float> pressuredMoveSpeed;
+        public static ConfigEntry<float> pressuredArmorLoss;
+        public static ConfigEntry<float> pressuredDamageLoss;
+
+        public static ConfigEntry<float> allyDamage;
         public static void Init()
         {
             string section = "Stats - 01";
@@ -83,6 +93,17 @@ namespace InterrogatorMod.Interrogator.Content
             affrayDamageCoefficient = Config.BindAndOptions(section, "Affray Damage Coefficient", 4.5f);
             falsifyDamageCoefficient = Config.BindAndOptions(section, "Falsify Damage Coefficient", 6f);
             convictMaxDuration = Config.BindAndOptions(section, "Convict Base Max Duration", 8f);
+                
+            guiltyHealthRegenPerStack = Config.BindAndOptions(section, "Guilty Health Regen Multiplier Per Stack", 0.15f);
+            guiltyBaseDamagePerStack = Config.BindAndOptions(section, "Guilty Flat Base Damage Per Stack", 0.5f);
+            guiltyAttackSpeedPerStack = Config.BindAndOptions(section, "Guilty Attack Speed Multiplier Per Stack", 0.15f);
+
+            pressuredAttackSpeed = Config.BindAndOptions(section, "Pressured Attack Speed Multiplier", 0.3f);
+            pressuredMoveSpeed = Config.BindAndOptions(section, "Pressured Move Speed Multiplier", 0.15f);
+            pressuredArmorLoss = Config.BindAndOptionsSlider(section, "Pressured Armor Loss Multiplier", 0.1f, "0 - 1 (0% loss - 100% loss)", 0f, 1f);
+            pressuredDamageLoss = Config.BindAndOptionsSlider(section, "Pressured Move Speed Multiplier", 0.1f, "0 - 1 (0% loss - 100% loss)", 0f, 1f);
+
+            allyDamage = Config.BindAndOptionsSlider(section, "Percentage of Ally Damage Given And Taken by Interrogator", 0.9f, "0.01 == 1% of total damage", 0.01f, 1f);
 
             forceUnlock = Config.BindAndOptions(
                 section2,

@@ -1,3 +1,9 @@
+# 0.7.3
+
+- Interrogator now gains health regen per guilty stack
+- Fixed Presssured Debuffs not applying
+- Added configs to adjust buff values
+
 # 0.7.2
 
 - Doubled hithop velocity
