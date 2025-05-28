@@ -24,9 +24,9 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public static float dashDuration = 0.5f;
 
-        public static float speedCoefficient = 5f;
+        public static float speedCoefficient = 6f;
 
-        public static string beginSoundString = "sfx_driver_dodge";
+        public static string beginSoundString = "Play_loader_shift_release";
 
         public static string endSoundString = "sfx_interrogator_dash";
 

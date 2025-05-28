@@ -56,10 +56,10 @@ namespace InterrogatorMod.Interrogator.Content
                 {
                     if (damageInfo.HasModdedDamageType(InterrogatorGuilty))
                     {
-                        StinkyLoserController stink = victimBody.gameObject.GetComponent<StinkyLoserController>();
+                        MarkedGuiltyController stink = victimBody.gameObject.GetComponent<MarkedGuiltyController>();
                         if (victimBody && !victimBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff) && !stink)
                         {
-                            stink = victimBody.gameObject.AddComponent<StinkyLoserController>();
+                            stink = victimBody.gameObject.AddComponent<MarkedGuiltyController>();
                             stink.attackerBody = attackerBody;
                             attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)

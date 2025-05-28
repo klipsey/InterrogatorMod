@@ -70,7 +70,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Pain;
+            return InterruptPriority.PrioritySkill;
         }
 
         public override void PlayAnimation(float duration)

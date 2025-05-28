@@ -1,9 +1,9 @@
 {
     "name": "Interrogator",
     "author": "tsuyoikenko",
-    "version_number": "0.7.3",
+    "version_number": "0.7.5",
     "website_url": "https://github.com/klipsey/InterrogatorMod",
-    "description": "Adds the Interrogator.",
+    "description": "Adds the Interrogator, a survivor that will make your friends hate you.",
     "dependencies": [
         "bbepis-BepInExPack-5.4.2117",
 	"RiskofThunder-R2API_TempVisualEffect-1.0.3",

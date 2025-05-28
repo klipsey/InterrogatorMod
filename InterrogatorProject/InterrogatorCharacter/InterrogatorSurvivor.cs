@@ -134,8 +134,6 @@ namespace InterrogatorMod.Interrogator
 
             base.InitializeCharacter();
 
-            CameraParams.InitializeParams();
-
             ChildLocator childLocator = bodyPrefab.GetComponentInChildren<ChildLocator>();
 
             DamageTypes.Init();
@@ -283,7 +281,7 @@ namespace InterrogatorMod.Interrogator
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
                 beginSkillCooldownOnSkillEnd = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
 
                 isCombatSkill = true,
                 canceledFromSprinting = false,
@@ -574,7 +572,7 @@ namespace InterrogatorMod.Interrogator
                     if (victimBody.bodyIndex == BodyCatalog.FindBodyIndex("InterrogatorBody"))
                     {
                         InterrogatorController iController = victimBody.GetComponent<InterrogatorController>();
-                        StinkyLoserController stink = attackerBody.gameObject.GetComponent<StinkyLoserController>();
+                        MarkedGuiltyController stink = attackerBody.gameObject.GetComponent<MarkedGuiltyController>();
                         if (iController && !stink)
                         {
                             if (attackerBody && !attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff))
@@ -584,14 +582,14 @@ namespace InterrogatorMod.Interrogator
                                     damageInfo.damage *= 1f - InterrogatorConfig.allyDamage.Value;
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
-                                    stink = attackerBody.gameObject.AddComponent<StinkyLoserController>();
+                                    stink = attackerBody.gameObject.AddComponent<MarkedGuiltyController>();
                                     stink.attackerBody = victimBody;
                                 }
                                 else
                                 {
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
-                                    stink = attackerBody.gameObject.AddComponent<StinkyLoserController>();
+                                    stink = attackerBody.gameObject.AddComponent<MarkedGuiltyController>();
                                     stink.attackerBody = victimBody;
                                 }
                                 victimBody.AddBuff(InterrogatorBuffs.interrogatorGuiltyBuff);

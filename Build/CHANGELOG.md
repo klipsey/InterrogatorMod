@@ -1,3 +1,14 @@
+# 0.7.5
+
+- Guilty now lingers for 3.5 seconds + 1.5 seconds per lysate cell after an enemy dies (this includes the infinite ramp up from convicts guilty stacks)
+- Fixed small hop being applied on every melee hit
+- Fixed cleaver immediately casting when held
+
+# 0.7.4
+
+- Added config to tweak ally damage
+- Lowkey tripled the cleaver radius 
+
 # 0.7.3
 
 - Interrogator now gains health regen per guilty stack

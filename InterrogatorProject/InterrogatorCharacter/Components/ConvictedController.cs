@@ -39,7 +39,15 @@ namespace InterrogatorMod.Interrogator.Components
         {
             if (NetworkServer.active)
             {
-                attackerBody.SetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff.buffIndex, attackerBody.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff) - additionalGuiltyTracker);
+                attackerBody.SetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff.buffIndex, 
+                    attackerBody.GetBuffCount(InterrogatorBuffs.interrogatorGuiltyBuff) - additionalGuiltyTracker);
+
+                // Buff Linger
+                for (int i = 0; i < additionalGuiltyTracker; i++)
+                {
+                    attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyBuff, 3.5f + 1.5f * attackerBody.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid));
+                }
+
                 attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorConvictBuff);
 
                 if (!characterBody.healthComponent.alive)

@@ -41,7 +41,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
             attackRecoil = 0.5f;
             hitHopVelocity = this.isConvicting ? 4f : 8f;
 
-            swingSoundString = this.isConvicting ? "Play_merc_sword_swing" : "sfx_driver_swing";
+            swingSoundString = this.isConvicting ? "Play_merc_sword_swing" : "Play_loader_m1_swing";
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingMuzzle1" : "SwingMuzzle2";
             playbackRateParam = "Swing.playbackRate";

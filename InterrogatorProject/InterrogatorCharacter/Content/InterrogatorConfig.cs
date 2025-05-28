@@ -89,9 +89,9 @@ namespace InterrogatorMod.Interrogator.Content
             moveSpeedGrowth = Config.BindAndOptions(section, "Change Move Speed Growth Value", 0f);
             jumpPowerGrowth = Config.BindAndOptions(section, "Change Jump Power Growth Value", 0f);
 
-            brutalBashDamageCoefficient = Config.BindAndOptions(section, "Brutal Bash Damage Coefficient", 2.6f);
+            brutalBashDamageCoefficient = Config.BindAndOptions(section, "Brutal Bash Damage Coefficient", 3.2f);
             affrayDamageCoefficient = Config.BindAndOptions(section, "Affray Damage Coefficient", 4.5f);
-            falsifyDamageCoefficient = Config.BindAndOptions(section, "Falsify Damage Coefficient", 6f);
+            falsifyDamageCoefficient = Config.BindAndOptions(section, "Falsify Damage Coefficient", 3.9f);
             convictMaxDuration = Config.BindAndOptions(section, "Convict Base Max Duration", 8f);
                 
             guiltyHealthRegenPerStack = Config.BindAndOptions(section, "Guilty Health Regen Multiplier Per Stack", 0.15f);

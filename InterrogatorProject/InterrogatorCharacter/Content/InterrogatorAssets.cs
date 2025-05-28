@@ -102,7 +102,7 @@ namespace InterrogatorMod.Interrogator.Content
         #region effects
         private static void CreateEffects()
         {
-            bloodExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("DriverBloodExplosion", false);
+            bloodExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("BloodExplosion", false);
 
             Material bloodMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodHumanLarge.mat").WaitForCompletion();
             Material bloodMat2 = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
@@ -211,7 +211,7 @@ namespace InterrogatorMod.Interrogator.Content
             if(!cleaverPrefab.GetComponent<NetworkIdentity>()) cleaverPrefab.AddComponent<NetworkIdentity>();
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().hitSoundString = "sfx_scout_cleaver_miss";
             cleaverPrefab.GetComponent<ProjectileSingleTargetImpact>().enemyHitSoundString = "sfx_scout_cleaver_hit";
-            cleaverPrefab.GetComponent<SphereCollider>().radius = 0.5f;
+            cleaverPrefab.GetComponent<SphereCollider>().radius = 1.5f;
 
             cleaverPrefab.GetComponent<ProjectileController>().allowPrediction = false;
 

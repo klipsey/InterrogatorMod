@@ -46,15 +46,15 @@ namespace InterrogatorMod.Modules.BaseStates
         protected NetworkSoundEventIndex impactSound = NetworkSoundEventIndex.Invalid;
 
         public float duration;
-        private bool hasFired;
-        private float hitPauseTimer;
-        private OverlapAttack attack;
+        protected bool hasFired;
+        protected float hitPauseTimer;
+        protected OverlapAttack attack;
         protected bool inHitPause;
-        private bool hasHopped;
+        protected bool hasHopped;
         protected float stopwatch;
         protected Animator animator;
-        private HitStopCachedState hitStopCachedState;
-        private Vector3 storedVelocity;
+        protected HitStopCachedState hitStopCachedState;
+        protected Vector3 storedVelocity;
 
         public override void OnEnter()
         {
@@ -74,9 +74,9 @@ namespace InterrogatorMod.Modules.BaseStates
             }
             moddedDamageTypeHolder.Clear();
             attack.damageColorIndex = DamageColorIndex.Default;
-            attack.attacker = this.gameObject;
-            attack.inflictor = this.gameObject;
-            attack.teamIndex = TeamIndex.None;
+            attack.attacker = gameObject;
+            attack.inflictor = gameObject;
+            attack.teamIndex = GetTeam();
             attack.damage = damageCoefficient * damageStat;
             attack.procCoefficient = procCoefficient;
             attack.hitEffectPrefab = hitEffectPrefab;
@@ -112,11 +112,6 @@ namespace InterrogatorMod.Modules.BaseStates
 
             if (!hasHopped)
             {
-                if (characterMotor && !characterMotor.isGrounded && hitHopVelocity > 0f)
-                {
-                    SmallHop(characterMotor, hitHopVelocity);
-                }
-
                 hasHopped = true;
             }
 
@@ -136,7 +131,7 @@ namespace InterrogatorMod.Modules.BaseStates
 
         protected virtual void FireAttack()
         {
-            if (base.isAuthority)
+            if (isAuthority)
             {
                 if (attack.Fire())
                 {
@@ -145,14 +140,14 @@ namespace InterrogatorMod.Modules.BaseStates
             }
         }
 
-        private void EnterAttack()
+        protected void EnterAttack()
         {
             hasFired = true;
             Util.PlayAttackSpeedSound(swingSoundString, gameObject, attackSpeedStat);
 
             PlaySwingEffect();
 
-            if (base.isAuthority)
+            if (isAuthority)
             {
                 AddRecoil(-1f * attackRecoil, -2f * attackRecoil, -0.5f * attackRecoil, 0.5f * attackRecoil);
             }
@@ -199,10 +194,11 @@ namespace InterrogatorMod.Modules.BaseStates
             }
         }
 
-        private void RemoveHitstop()
+        protected void RemoveHitstop()
         {
             ConsumeHitStopCachedState(hitStopCachedState, characterMotor, animator);
             inHitPause = false;
+            storedVelocity.y = Mathf.Max(storedVelocity.y, hitHopVelocity / Mathf.Sqrt(attackSpeedStat));
             characterMotor.velocity = storedVelocity;
         }
 

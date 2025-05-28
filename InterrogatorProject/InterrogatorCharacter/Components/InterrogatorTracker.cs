@@ -13,9 +13,9 @@ namespace InterrogatorMod.Interrogator.Components
     [RequireComponent(typeof(InputBankTest))]
     public class InterrogatorTracker : MonoBehaviour
     {
-        public float maxTrackingDistance = 60f;
+        public float maxTrackingDistance = 30f;
 
-        public float maxTrackingAngle = 10f;
+        public float maxTrackingAngle = 30f;
 
         public float trackerUpdateFrequency = 10f;
 
