@@ -10,16 +10,16 @@ namespace InterrogatorMod.Modules
 
         public static string agileKeyword = KeywordText("Agile", "The skill can be used while sprinting.");
 
-        public static string slayerKeyword = KeywordText("Slayer", "Deals up to 3x damage against low health enemies.");
+        public static string slayerKeyword = KeywordText("Slayer", "Deals up to <style=cIsDamage>3x</style> damage against low health enemies.");
 
         public static string hemKeyword = KeywordText("Hemorrhage", "Deal <style=cIsDamage>2000%</style> base damage over 15s. <i>Hemorrhage</i> can stack.");
 
-        public static string interrogatorPressuredKeyword = KeywordText("Pressured", "Boost attack speed and move speed but lowers armor and damage (decreased ally negative stats).");
+        public static string interrogatorPressuredKeyword = KeywordText("Pressured", "Boost <style=cIsDamage>attack speed</style> and <style=cIsUtility>move speed</style> but lowers <style=cIsHealing>armor</style> and <style=cIsDamage>damage</style>.");
         
         public static string interrogatorGuiltyKeyword = KeywordText("Guilty", "Grants <color=#FFBF66>Interrogator</color> <style=cIsDamage>attack speed</style>, <style=cIsHealing>health regen</style>, and " +
                 $"<style=cIsDamage>damage</style> for each <color=#FFBF66>Guilty</color> target.");
 
-        public static string interrogatorAllyKeyword = KeywordText("Ally Damage", "Allies take and deal less damage to each other and Guilty expires from them after 10 seconds.");
+        public static string interrogatorAllyKeyword = KeywordText("Ally Damage", "Allies take and deal less damage to each other and <color=#FFBF66>Guilty</color> expires from them after 10 seconds.");
 
         public static string DamageText(string text)
         {

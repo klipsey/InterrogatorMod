@@ -25,9 +25,9 @@ namespace InterrogatorMod.Interrogator.Content
             string prefix = InterrogatorSurvivor.INTERROGATOR_PREFIX;
 
             string desc = "Interrogator relishes the pain of others. Don't have too much fun hurting your allies, or do...<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Punish the Guilty after they hit you to gain attack speed and move speed. No running from justice." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > If you need a quick and dirty Guilty buff, swing and hit yourself instead. The law applies to everyone!" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Falsify is a great way to spot the Guilty before they commit crimes. Unethical? What do you mean?" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Get hit by enemies, allies, and even yourself to gain bonus stats. No one is safe." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > If you have items that activate when you get hit, use Affray to Hemmorhage yourself. No pain no gain." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Falsify is a great way to force enemies to be marked as Guilty. Unethical? What do you mean?" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Convict a Guilty target to make sure they are punished for their acts. Guilty until proven innocent after all." + Environment.NewLine + Environment.NewLine;
 
             string lore = "Snow softly fell from the skies, as was usual for the region that Dylan had found himself in. He, with his squad, stood on duty, looking out for either danger, or someone who needed rescue.\n\n" +

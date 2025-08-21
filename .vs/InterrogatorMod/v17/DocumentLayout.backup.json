@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\RoR2Mods\\InterrogatorMod\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\interrogatorcharacter\\interrogatorsurvivor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|solutionrelative:interrogatorproject\\interrogatorcharacter\\interrogatorsurvivor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\interrogatorcharacter\\content\\interrogatortokens.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|solutionrelative:interrogatorproject\\interrogatorcharacter\\content\\interrogatortokens.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\modules\\tokens.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|solutionrelative:interrogatorproject\\modules\\tokens.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\modules\\skins.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|solutionrelative:interrogatorproject\\modules\\skins.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\interrogatorcharacter\\interrogatorsurvivor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|solutionrelative:interrogatorproject\\interrogatorcharacter\\interrogatorsurvivor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E7632D3-6DB0-467A-857B-EF561E5F919F}|InterrogatorProject\\InterrogatorMod.csproj|d:\\ror2mods\\interrogatormod\\interrogatorproject\\interrogatorcharacter\\content\\interrogatorconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,7 +138,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 28,
+          "SelectedChildIndex": 27,
           "Children": [
             {
               "$type": "Bookmark",
@@ -226,7 +230,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
+              "Title": "Skins.cs",
+              "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\Skins.cs",
+              "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\Skins.cs",
+              "ToolTip": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\Skins.cs",
+              "RelativeToolTip": "InterrogatorProject\\Modules\\Skins.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T21:30:53.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "CleaverController.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\CleaverController.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\CleaverController.cs",
@@ -238,7 +255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Swing.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Swing.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Swing.cs",
@@ -250,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "BaseMeleeAttack.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\BaseContent\\BaseStates\\BaseMeleeAttack.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\BaseContent\\BaseStates\\BaseMeleeAttack.cs",
@@ -263,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ThrowCleaver.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\SkillStates\\ThrowCleaver.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\SkillStates\\ThrowCleaver.cs",
@@ -275,33 +292,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "InterrogatorTokens.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorTokens.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorTokens.cs",
               "ToolTip": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorTokens.cs",
               "RelativeToolTip": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorTokens.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAiwF8AAABbAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAUwBwAAACGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-09T22:12:57.494Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Tokens.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\Tokens.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\Tokens.cs",
               "ToolTip": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\Tokens.cs",
               "RelativeToolTip": "InterrogatorProject\\Modules\\Tokens.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAuwA4AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwB4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-20T01:29:43.102Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "InterrogatorSurvivor.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\InterrogatorSurvivor.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\InterrogatorSurvivor.cs",
@@ -314,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "InterrogatorConfig.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorConfig.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorConfig.cs",
@@ -327,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "InterrogatorAssets.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorAssets.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorAssets.cs",
@@ -339,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "DamageTypes.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\DamageTypes.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\DamageTypes.cs",
@@ -351,7 +368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "InterrogatorTracker.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorTracker.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorTracker.cs",
@@ -363,7 +380,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Convict.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Convict.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Convict.cs",
@@ -375,7 +392,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Falsify.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Falsify.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\SkillStates\\Falsify.cs",
@@ -387,7 +404,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "MainState.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\SkillStates\\MainState.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\SkillStates\\MainState.cs",
@@ -399,7 +416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ConvictHudController.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\ConvictHudController.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\ConvictHudController.cs",
@@ -411,7 +428,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ConvictedController.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\ConvictedController.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\ConvictedController.cs",
@@ -423,7 +440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "InterrogatorController.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorController.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorController.cs",
@@ -435,7 +452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "InterrogatorMod.csproj",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorMod.csproj",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorMod.csproj",
@@ -447,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "BaseInterrogatorSkillState.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\BaseContent\\BaseStates\\BaseInterrogatorSkillState.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\BaseContent\\BaseStates\\BaseInterrogatorSkillState.cs",
@@ -459,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "InterrogatorMod",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorMod.csproj",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorMod.csproj",
@@ -470,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "MarkedGuiltyController.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\MarkedGuiltyController.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\MarkedGuiltyController.cs",
@@ -482,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "interrogator.manifest",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\interrogator.manifest",
               "RelativeDocumentMoniker": "InterrogatorProject\\interrogator.manifest",
@@ -494,7 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Materials.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\Materials.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\Materials.cs",
@@ -506,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "InterrogatorAI.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorAI.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorAI.cs",
@@ -518,7 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "InterrogatorBuffs.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorBuffs.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorBuffs.cs",
@@ -530,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "CharacterBase.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\Modules\\BaseContent\\Characters\\CharacterBase.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\Modules\\BaseContent\\Characters\\CharacterBase.cs",
@@ -542,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "InterrogatorStates.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorStates.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorStates.cs",
@@ -554,7 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "SyncSelfDamage.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\SyncSelfDamage.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\SyncSelfDamage.cs",
@@ -566,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "InterrogatorItemDisplays.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorItemDisplays.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Content\\InterrogatorItemDisplays.cs",
@@ -578,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "SyncSword.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\SyncSword.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\SyncSword.cs",
@@ -590,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "InterrogatorPassive.cs",
               "DocumentMoniker": "D:\\RoR2Mods\\InterrogatorMod\\InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorPassive.cs",
               "RelativeDocumentMoniker": "InterrogatorProject\\InterrogatorCharacter\\Components\\InterrogatorPassive.cs",
