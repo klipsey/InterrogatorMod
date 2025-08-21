@@ -103,7 +103,7 @@ namespace InterrogatorMod.Interrogator.Content
             pressuredArmorLoss = Config.BindAndOptionsSlider(section, "Pressured Armor Loss Multiplier", 0.1f, "0 - 1 (0% loss - 100% loss)", 0f, 1f);
             pressuredDamageLoss = Config.BindAndOptionsSlider(section, "Pressured Move Speed Multiplier", 0.1f, "0 - 1 (0% loss - 100% loss)", 0f, 1f);
 
-            allyDamage = Config.BindAndOptionsSlider(section, "Percentage of Ally Damage Given And Taken by Interrogator", 0.9f, "0.01 == 1% of total damage", 0.01f, 1f);
+            allyDamage = Config.BindAndOptionsSlider(section, "Percentage of Ally Damage Given And Taken by Interrogator", 0.1f, "0.01 == 1% of total damage", 0.01f, 1f);
 
             forceUnlock = Config.BindAndOptions(
                 section2,

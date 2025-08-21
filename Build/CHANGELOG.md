@@ -1,3 +1,13 @@
+# 0.8.0
+
+- Primary hits allies again
+- Fixed secondary hitting allies twice
+- Moved guilty description to keyword
+- Shrunk tokens
+- Flipped ally damage config to be more intuitive (Delete your configs)
+- Added lore from goodguy
+- Updated dependencies
+
 # 0.7.5
 
 - Guilty now lingers for 3.5 seconds + 1.5 seconds per lysate cell after an enemy dies (this includes the infinite ramp up from convicts guilty stacks)

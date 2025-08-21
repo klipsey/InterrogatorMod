@@ -67,4 +67,6 @@ tsuyoikenko - Code, model, animations, skill icons.
 
 goodguy - Concept art, lore, being awesome.
 
+CrazyAceKing - Lore proofreading
+
 TheTimeSweeper - Incredible new Henry template.

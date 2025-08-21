@@ -43,7 +43,11 @@ namespace InterrogatorMod.Interrogator.Components
 
         private void FixedUpdate()
         {
-            if (hasAppliedAllyDamage) this.enabled = false;
+            if (hasAppliedAllyDamage)
+            {
+                this.enabled = false;
+                return;
+            }
             if (!NetworkServer.active || !projectileStickOnImpact.stuck) return;
             if(!projectileStickOnImpact.victim) return;
             victim = projectileStickOnImpact.victim;

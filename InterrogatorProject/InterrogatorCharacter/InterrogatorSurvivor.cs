@@ -216,7 +216,7 @@ namespace InterrogatorMod.Interrogator
                 skillNameToken = INTERROGATOR_PREFIX + "PASSIVE_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "PASSIVE_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texInterrogatorPassive"),
-                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword },
+                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword, Tokens.interrogatorAllyKeyword },
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "",
                 baseMaxStock = 1,
@@ -263,7 +263,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Affray",
                 skillNameToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SECONDARY_AFFRAY_DESCRIPTION",
-                keywordTokens = new string[] { Tokens.interrogatorPressuredKeyword, Tokens.slayerKeyword },
+                keywordTokens = new string[] { Tokens.slayerKeyword, Tokens.interrogatorPressuredKeyword, Tokens.hemKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texInterrogatorCleaverIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(ThrowCleaver)),
@@ -299,7 +299,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Falsify",
                 skillNameToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "UTILITY_FALSIFY_DESCRIPTION",
-                keywordTokens = new string[] { },
+                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texFalsifyIcon"),
 
                 activationState = new SerializableEntityStateType(typeof(Falsify)),
@@ -336,7 +336,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Convict",
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_CONVICT_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SPECIAL_CONVICT_DESCRIPTION",
-                keywordTokens = new string[] { },
+                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texConvictIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Convict)),
@@ -372,7 +372,7 @@ namespace InterrogatorMod.Interrogator
                 skillName = "Convict Scepter",
                 skillNameToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_NAME",
                 skillDescriptionToken = INTERROGATOR_PREFIX + "SPECIAL_SCEPTER_CONVICT_DESCRIPTION",
-                keywordTokens = new string[] { },
+                keywordTokens = new string[] { Tokens.interrogatorGuiltyKeyword },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texConvictScepter"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ConvictScepter)),
@@ -547,7 +547,7 @@ namespace InterrogatorMod.Interrogator
         }
         internal static void HealthComponent_TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
-            if (NetworkServer.active && self.alive || !self.godMode || self.ospTimer <= 0f)
+            if (NetworkServer.active && damageInfo != null && self && self.alive || !self.godMode || self.ospTimer <= 0f)
             {
                 CharacterBody victimBody = self.body;
                 CharacterBody attackerBody = null;
@@ -579,7 +579,7 @@ namespace InterrogatorMod.Interrogator
                             {
                                 if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                                 {
-                                    damageInfo.damage *= 1f - InterrogatorConfig.allyDamage.Value;
+                                    damageInfo.damage *= InterrogatorConfig.allyDamage.Value;
                                     if (attackerBody.HasBuff(InterrogatorBuffs.interrogatorGuiltyDebuff)) attackerBody.RemoveOldestTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff);
                                     attackerBody.AddTimedBuff(InterrogatorBuffs.interrogatorGuiltyDebuff, 10f);
                                     stink = attackerBody.gameObject.AddComponent<MarkedGuiltyController>();
@@ -603,7 +603,7 @@ namespace InterrogatorMod.Interrogator
                         {
                             if (attackerBody.teamComponent.teamIndex == victimBody.teamComponent.teamIndex)
                             {
-                                damageInfo.damage *= 1f - InterrogatorConfig.allyDamage.Value;
+                                damageInfo.damage *= InterrogatorConfig.allyDamage.Value;
                             }
                         }
                     }

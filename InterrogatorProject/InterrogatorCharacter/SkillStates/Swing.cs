@@ -55,6 +55,8 @@ namespace InterrogatorMod.Interrogator.SkillStates
             impactSound = this.isConvicting ? InterrogatorAssets.swordImpactSoundEvent.index : InterrogatorAssets.batImpactSoundEvent.index;
 
             base.OnEnter();
+
+            attack.teamIndex = TeamIndex.Neutral;
         }
 
         protected override void OnHitEnemyAuthority()
@@ -104,7 +106,7 @@ namespace InterrogatorMod.Interrogator.SkillStates
                 DamageInfo selfDamage = new DamageInfo();
                 selfDamage.attacker = base.gameObject;
                 selfDamage.inflictor = base.gameObject;
-                selfDamage.damage = this.damageCoefficient * this.damageStat * 0.75f;
+                selfDamage.damage = this.damageCoefficient * this.damageStat * 0.9f;
                 selfDamage.procCoefficient = 0.5f;
                 selfDamage.crit = RollCrit();
                 selfDamage.damageType = DamageType.NonLethal;
